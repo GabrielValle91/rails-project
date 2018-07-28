@@ -1,0 +1,2 @@
+class ShipmentDriver < ApplicationRecord
+end
