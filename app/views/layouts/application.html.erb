@@ -22,7 +22,11 @@
           <a class="navbar-brand" href="<%= new_user_url %>">Sign Up</a>
           <a class="navbar-brand" href="<%= signin_url %>">Log In</a>
         <% else %>
-          <a class="navbar-brand" href="<%= user_path(current_user) %>"><%= current_user.name%>'s profile</a>
+          <a class="navbar-brand" href="<%= user_path(current_user) %>"><%= current_user.name%>'s Profile</a>
+          <a class="navbar-brand" href="<%= user_path(current_user) %>"><%= current_user.name%>'s Shipments</a>
+          <a class="navbar-brand" href="<%= user_path(current_user) %>"><%= current_user.name%>'s Clients</a>
+          <a class="navbar-brand" href="<%= user_path(current_user) %>"><%= current_user.name%>'s Items</a>
+          <a class="navbar-brand" href="<%= user_path(current_user) %>">Locations</a>
           <a class="navbar-brand" href="<%= logout_url %>">Log Out</a>
         <% end %>
         </div>
