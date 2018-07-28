@@ -1,8 +1,11 @@
 class CreateJoinTableShipmentLocations < ActiveRecord::Migration[5.2]
   def change
-    create_join_table :shipments, :locations do |t|
-      # t.index [:shipment_id, :location_id]
-      # t.index [:location_id, :shipment_id]
+    create_table :shipment_locations do |t|
+      t.belongs_to :shipment
+      t.belongs_to :location
+      t.belongs_to :shipment_driver
+      t.string :location_type
+      t.timestamps
     end
   end
 end

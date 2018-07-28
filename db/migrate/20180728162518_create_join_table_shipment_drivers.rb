@@ -1,8 +1,10 @@
 class CreateJoinTableShipmentDrivers < ActiveRecord::Migration[5.2]
   def change
-    create_join_table :shipments, :drivers do |t|
-      # t.index [:shipment_id, :driver_id]
-      # t.index [:driver_id, :shipment_id]
+    create_table :shipment_drivers do |t|
+      t.belongs_to :shipment
+      t.belongs_to :driver
+      t.belongs_to :shipment_location
+      t.timestamps
     end
   end
 end
