@@ -21,7 +21,7 @@ class ClientsController < ApplicationController
       redirect_to clients_path
     else
       flash[:notice] = "#{@client.errors.full_messages}"
-      redirect_to new_client_path
+      redirect_to new_user_client_path(current_user)
     end
   end
 
@@ -29,7 +29,12 @@ class ClientsController < ApplicationController
   end
 
   def update
-
+    if @client.update(client_params)
+      redirect_to user_client_path(current_user, @client)
+    else
+      flash[:notice] = "#{@client.errors.full_messages}"
+      redirect_to edit_user_client_path(current_user, @client)
+    end
   end
 
   private
