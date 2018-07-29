@@ -4,7 +4,11 @@ class ItemsController < ApplicationController
   before_action :find_item, only: [:show, :edit, :update]
 
   def index
-
+    if params[:client_id]
+      @items = current_client.items
+    else
+      @items = current_user.items
+    end
   end
 
   def show
@@ -15,13 +19,6 @@ class ItemsController < ApplicationController
 
   def create
     @item = Item.create(item_params)
-    #@item.name = params[:item][:name]
-    #@item.description = params[:item][:description]
-    #if params[:item][:client_name]
-    #  @item.client = Client.find_by(name: params[:item][:client_name])
-    #else
-    #  @item.client = Client.find(params[:item][:client_id])
-    #end
     if @item.save
       redirect_to user_client_path(current_user, @item.client)
     else

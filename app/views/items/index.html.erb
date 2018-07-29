@@ -1,0 +1,19 @@
+<h2>Items</h2>
+<table class="items">
+  <thead>
+    <tr>
+      <td>Item Name</td>
+      <td>Item Description</td>
+      <td>Client Name</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @items.each do |item| %>
+      <tr>
+        <td><%= link_to "#{item.name}", client_item_path(item.client, item) %></td>
+        <td><%= item.description %></td>
+        <td><%= link_to "#{item.client.name}", user_client_path(current_user, item.client) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
