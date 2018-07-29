@@ -1,7 +1,8 @@
 class ClientsController < ApplicationController
   before_action :user_auth
-  def index
 
+  def index
+    @clients = current_user.clients
   end
 
   def show
@@ -27,7 +28,7 @@ class ClientsController < ApplicationController
   private
 
   def user_auth
-    if !logged_in
+    if !logged_in?
       redirect_to signin_url
     end
   end
