@@ -1,0 +1,26 @@
+<div class="head">
+<h2><%= @client.name %>'s Details</h2>
+</div>
+<div class="client-items">
+  <h4>Item Details</h4>
+  <%= link_to "Create new item", new_client_item_path(@client) %>
+  <table>
+    <thead>
+      <tr>
+        <td>Item Name</td>
+        <td>Item Description</td>
+      </tr>
+    </thead>
+    <tbody>
+      <% @client.items.each do |item| %>
+        <tr>
+          <td><%= item.name %></td>
+          <td><%= item.description %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<div class="shipment-details">
+  <h4>Shipment Details</h4>
+</div>
