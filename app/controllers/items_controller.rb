@@ -14,13 +14,14 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @item.name = params[:item][:name]
-    @item.description = params[:item][:description]
-    if params[:item][:client_name]
-      @item.client = Client.find_by(name: params[:item][:client_name])
-    else
-      @item.client = Client.find(params[:item][:client_id])
-    end
+    @item = Item.create(item_params)
+    #@item.name = params[:item][:name]
+    #@item.description = params[:item][:description]
+    #if params[:item][:client_name]
+    #  @item.client = Client.find_by(name: params[:item][:client_name])
+    #else
+    #  @item.client = Client.find(params[:item][:client_id])
+    #end
     if @item.save
       redirect_to user_client_path(current_user, @item.client)
     else
@@ -37,7 +38,16 @@ class ItemsController < ApplicationController
   end
 
   def update
-
+    if @item.update(item_params)
+      redirect_to user_client_path(current_user, @item.client)
+    else
+      flash[:notice] = @item.errors.full_messages
+      if params[:item][:client_name]
+        redirect_to edit_client_item_path(@item.client)
+      else
+        redirect_to edit_item_path(@item)
+      end
+    end
   end
 
   private
@@ -51,7 +61,7 @@ class ItemsController < ApplicationController
   end
 
   def item_params
-    params.require(:item).permit(:name, :client_id, :client_name)
+    params.require(:item).permit(:name, :description, :client_id, :client_name)
   end
 
   def user_auth
