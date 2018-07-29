@@ -4,4 +4,7 @@ class Driver < ApplicationRecord
   has_many :shipments, through: :shipment_drivers
   has_many :shipment_locations, through: :shipment_drivers
   has_many :locations, through: :shipment_locations
+
+  LICENSES = ["Class A", "Class C"]
+  DRIVERTYPES = ["Employee", "Owner Operator"]
 end

@@ -2,6 +2,7 @@ class ShipmentsController < ApplicationController
   before_action :user_auth
   before_action :make_shipment, only: [:new]
   before_action :find_shipment, only: [:show, :edit, :update]
+
   def index
 
   end
@@ -11,7 +12,6 @@ class ShipmentsController < ApplicationController
   end
 
   def new
-
   end
 
   def create
@@ -19,7 +19,6 @@ class ShipmentsController < ApplicationController
   end
 
   def edit
-
   end
 
   def update

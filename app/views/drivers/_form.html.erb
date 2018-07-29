@@ -1,0 +1,14 @@
+<%= form_for driver do |f| %>
+  <% if flash[:notice] %>
+    <% flash[:notice].each do |msg| %>
+      <%= msg %><br>
+    <% end %>
+  <% end %>
+  <%= f.label :name %>
+  <%= f.text_field :name %><br>
+  <%= f.label :license %>
+  <%= f.select :license, Driver::LICENSES, {include_blank: true} %><br>
+  <%= f.label :driver_type %>
+  <%= f.select :driver_type, Driver::DRIVERTYPES, {include_blank: true} %><br>
+  <%= f.submit %>
+<% end %>
