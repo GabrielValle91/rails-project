@@ -1,4 +1,5 @@
 class ClientsController < ApplicationController
+  before_action :user_auth
   def index
 
   end
@@ -21,5 +22,13 @@ class ClientsController < ApplicationController
 
   def update
 
+  end
+
+  private
+
+  def user_auth
+    if !logged_in
+      redirect_to signin_url
+    end
   end
 end
