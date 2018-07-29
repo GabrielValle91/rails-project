@@ -1,4 +1,7 @@
 <%= form_for client do |f| %>
+  <% if flash[:notice] %>
+    <%= flash[:notice] %>
+  <% end %>
   <%= f.label :name %>
   <%= f.text_field :name %>
   <br>
