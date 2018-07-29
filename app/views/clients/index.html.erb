@@ -1,7 +1,9 @@
 <h2>Your clients</h2>
 <ol>
   <% @clients.each do |client| %>
-    <li><%= link_to "#{client.name}", user_client_path(current_user, client) %></li>
+    <li>
+      <%= link_to "#{client.name}", user_client_path(current_user, client) %>
+    </li>
   <% end %>
 </ol>
 <%= link_to "Create new client", new_user_client_path(current_user) %>

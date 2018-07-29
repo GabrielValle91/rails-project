@@ -1,20 +1,19 @@
 class ClientsController < ApplicationController
   before_action :user_auth
+  before_action :make_client, only: [:new, :create]
+  before_action :find_client, only: [:show, :edit, :update]
 
   def index
     @clients = current_user.clients
   end
 
   def show
-    @client = Client.find(params[:id])
   end
 
   def new
-    @client = Client.new
   end
 
   def create
-    @client = Client.new
     @client.name = params[:client][:name]
     @client.user_id = current_user.id
     if @client.valid?
@@ -27,7 +26,6 @@ class ClientsController < ApplicationController
   end
 
   def edit
-    @client = Client.find(params[:id])
   end
 
   def update
@@ -35,6 +33,14 @@ class ClientsController < ApplicationController
   end
 
   private
+
+  def make_client
+    @client = Client.new
+  end
+
+  def find_client
+    @client = Client.find(params[:id])
+  end
 
   def client_params
     params.require(:client).permit(:name, :user_id)

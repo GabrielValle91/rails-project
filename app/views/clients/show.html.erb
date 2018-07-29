@@ -1,5 +1,6 @@
 <div class="head">
 <h2><%= @client.name %>'s Details</h2>
+<%= link_to "Edit client", edit_user_client_url(current_user, @client) %>
 </div>
 <div class="client-items">
   <h4>Item Details</h4>
@@ -23,4 +24,5 @@
 </div>
 <div class="shipment-details">
   <h4>Shipment Details</h4>
+  <%= link_to "Create new shipment", new_client_shipment_url(@client) %>
 </div>
