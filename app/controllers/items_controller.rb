@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_action :user_auth
-  before_action :make_item, only: [:new, :create]
+  before_action :make_item, only: [:new]
   before_action :find_item, only: [:show, :edit, :update]
 
   def index
