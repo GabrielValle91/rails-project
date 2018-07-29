@@ -1,7 +1,7 @@
 class ClientsController < ApplicationController
   before_action :user_auth
   before_action :make_client, only: [:new, :create]
-  before_action :find_client, only: [:show, :edit, :update]
+  before_action :correct_user, only: [:show, :edit, :update]
 
   def index
     @clients = current_user.clients
@@ -45,6 +45,13 @@ class ClientsController < ApplicationController
 
   def find_client
     @client = Client.find(params[:id])
+  end
+
+  def correct_user
+    @client = Client.find(params[:id])
+    if @client.user_id != current_user.id
+      redirect_to user_clients_path(current_user)
+    end
   end
 
   def client_params
