@@ -2,9 +2,9 @@ class LocationsController < ApplicationController
   before_action :user_auth
   before_action :make_location, only: [:new]
   before_action :find_location, only: [:edit, :update, :show]
-  
-  def index
 
+  def index
+    @locations = Location.all
   end
 
   def show
