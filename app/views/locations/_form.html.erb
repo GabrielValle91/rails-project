@@ -1,4 +1,9 @@
 <%= form_for location do |f| %>
+  <% if flash[:notice] %>
+    <% flash[:notice].each do |msg| %>
+      <%= msg %><br>
+    <% end %>
+  <% end %>
   <%= f.label :company_name %>
   <%= f.text_field :company_name %><br>
   <%= f.label :address1 %>
@@ -11,4 +16,5 @@
   <%= f.select :state, Location::STATES, {include_blank: true} %><br>
   <%= f.label :zip_code %>
   <%= f.text_field :zip_code %><br>
+  <%= f.submit %>
 <% end %>
