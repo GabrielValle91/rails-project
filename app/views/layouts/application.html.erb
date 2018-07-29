@@ -23,9 +23,9 @@
           <a class="navbar-brand" href="<%= signin_url %>">Log In</a>
         <% else %>
           <a class="navbar-brand" href="<%= user_path(current_user) %>"><%= current_user.username%>'s Profile</a>
-          <a class="navbar-brand" href="<%= shipments_path %>">Shipments</a>
-          <a class="navbar-brand" href="<%= clients_path %>">Clients</a>
-          <a class="navbar-brand" href="<%= items_path %>">Items</a>
+          <a class="navbar-brand" href="<%= user_shipments_path(current_user) %>">Shipments</a>
+          <a class="navbar-brand" href="<%= user_clients_path(current_user) %>">Clients</a>
+          <a class="navbar-brand" href="<%= user_items_path(current_user) %>">Items</a>
           <a class="navbar-brand" href="<%= locations_path %>">Locations</a>
           <a class="navbar-brand" href="<%= logout_url %>">Log Out</a>
         <% end %>
