@@ -8,7 +8,7 @@ class ClientsController < ApplicationController
   end
 
   def new
-
+    @client = Client.new
   end
 
   def create
