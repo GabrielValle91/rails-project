@@ -1,0 +1,19 @@
+<%= form_for item do |f| %>
+  <% if flash[:notice] %>
+    <%= flash[:notice] %>
+  <% end %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+  <br>
+  <%= f.label :description %>
+  <%= f.text_field :description %>
+  <br>
+  <%= f.label :client_id %>
+  <% if params[:client_id] %>
+    <%= f.text_field :client_name, {value: "#{current_client.name}", readonly: true}%>
+  <% else %>
+    <%= f.collection_select :client_id, current_user.clients, :id, :name, prompt: "Please select the client this item belongs to" %>
+  <% end %>
+  <br>
+  <%= f.submit %>
+<% end %>

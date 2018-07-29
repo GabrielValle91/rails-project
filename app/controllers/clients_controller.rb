@@ -48,7 +48,7 @@ class ClientsController < ApplicationController
   end
 
   def correct_user
-    @client = Client.find(params[:id])
+    find_client
     if @client.user_id != current_user.id
       redirect_to user_clients_path(current_user)
     end
