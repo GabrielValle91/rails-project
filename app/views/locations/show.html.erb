@@ -1,0 +1,6 @@
+<h2>Location Details</h2>
+<p>Company Name: <%= @location.company_name %></p>
+<p>Address1: <%= @location.address1 %></p>
+<p>Address2: <%= @location.address2 %></p>
+<p>City/State/Zip: <%= @location.city %>, <%= @location.state %> <%= @location.zip_code %></p>
+<%= link_to "Edit this location", edit_location_path(@location) %>
