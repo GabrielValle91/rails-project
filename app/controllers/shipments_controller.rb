@@ -4,11 +4,10 @@ class ShipmentsController < ApplicationController
   before_action :find_shipment, only: [:show, :edit, :update]
 
   def index
-
+    @shipments = current_user.shipments
   end
 
   def show
-
   end
 
   def new
@@ -36,7 +35,7 @@ class ShipmentsController < ApplicationController
   end
 
   def shipment_params
-    params.require(:item).permit(:name, :description, :client_id, :client_name)
+    params.require(:item).permit(:reference, :pickup_date, :deliver_date, :user_id)
   end
 
   def user_auth
