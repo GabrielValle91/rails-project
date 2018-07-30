@@ -8,7 +8,6 @@ class DriversController < ApplicationController
   end
 
   def show
-
   end
 
   def new
