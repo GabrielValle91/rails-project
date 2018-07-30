@@ -1,0 +1,19 @@
+<h2>Drivers</h2>
+<table>
+  <thead>
+    <tr>
+      <td>Driver Name</td>
+      <td>License Type</td>
+      <td>Driver Type</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @drivers.each do |driver| %>
+      <tr>
+        <td><%= link_to "#{driver.name}", driver_path(driver) %></td>
+        <td><%= driver.license %></td>
+        <td><%= driver.driver_type %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
