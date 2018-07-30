@@ -5,6 +5,7 @@ class User < ApplicationRecord
   validates :username, :email, uniqueness: true
   has_many :clients
   has_many :shipments
+  has_many :drivers
 
   def items
     user_items = []
