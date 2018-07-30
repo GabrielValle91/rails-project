@@ -11,7 +11,6 @@ class ShipmentsController < ApplicationController
   end
 
   def new
-    
   end
 
   def create
@@ -36,7 +35,7 @@ class ShipmentsController < ApplicationController
   end
 
   def shipment_params
-    params.require(:item).permit(:reference, :pickup_date, :deliver_date, :user_id, :client_id, :client_name)
+    params.require(:item).permit(:reference, :pickup_date, :deliver_date, :user_id, :client_id, location_shipper: [], location_consignee: [], :driver[:id][])
   end
 
   def user_auth
