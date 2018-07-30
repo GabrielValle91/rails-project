@@ -12,18 +12,20 @@
   <%= f.date_field :pickup_date %>
   <%= f.label :delivery_date %>
   <%= f.date_field :delivery_date %><br>
-  <select name="[shipment][location][id][]">
-    <option value="" selected="selected">Select a shipper</option>
-    <% Location.all.each do |location| %>
-      <option value="<%= location.id %>"><%= location.company_name %></option>
-    <% end %>
-  </select>
-  <select name="[shipment][location][id][]">
-    <option value="" selected="selected">Select a consignee</option>
-    <% Location.all.each do |location| %>
-      <option value="<%= location.id %>"><%= location.company_name %></option>
-    <% end %>
-  </select>
+  <div class="wide">
+    Shipper: <select name="[shipment][location][id][]">
+      <option value="" selected="selected">Select a shipper</option>
+      <% Location.all.each do |location| %>
+        <option value="<%= location.id %>"><%= location.company_name %></option>
+      <% end %>
+    </select>
+    Consignee: <select name="[shipment][location][id][]">
+      <option value="" selected="selected">Select a consignee</option>
+      <% Location.all.each do |location| %>
+        <option value="<%= location.id %>"><%= location.company_name %></option>
+      <% end %>
+    </select>
+  </div>
   <div class = "new-address">
     Or create a new shipper<br>
     <%= f.fields_for :location_shipper do |location_details| %>
@@ -35,7 +37,6 @@
       Zip: <%= location_details.text_field :zip_code %><br>
     <% end %>
   </div>
-  <br>
   <div class="new-address">
     Or create a new consignee<br>
     <%= f.fields_for :location_consignee do |location_details| %>
@@ -47,6 +48,20 @@
       Zip: <%= location_details.text_field :zip_code %><br>
     <% end %>
   </div>
+  <br>
+  Pickup Driver: <select name="[shipment][driver][id][]">
+    <option value="" selected="selected">Select a pickup driver</option>
+    <% current_user.drivers.each do |driver| %>
+      <option value="<%= driver.id %>"><%= driver.name %></option>
+    <% end %>
+  </select>
+  Delivery Driver:
+  Consignee: <select name="[shipment][location][id][]">
+    <option value="" selected="selected">Select a consignee</option>
+    <% Location.all.each do |location| %>
+      <option value="<%= location.id %>"><%= location.company_name %></option>
+    <% end %>
+  </select>
   <br>
   <%= f.submit %>
 <% end %>

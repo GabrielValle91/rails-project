@@ -11,6 +11,7 @@ class LocationsController < ApplicationController
   end
 
   def new
+    raise params.inspect
   end
 
   def create
