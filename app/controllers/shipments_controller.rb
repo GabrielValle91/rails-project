@@ -11,10 +11,11 @@ class ShipmentsController < ApplicationController
   end
 
   def new
+    
   end
 
   def create
-
+    raise params.inspect
   end
 
   def edit
@@ -35,7 +36,7 @@ class ShipmentsController < ApplicationController
   end
 
   def shipment_params
-    params.require(:item).permit(:reference, :pickup_date, :deliver_date, :user_id)
+    params.require(:item).permit(:reference, :pickup_date, :deliver_date, :user_id, :client_id, :client_name)
   end
 
   def user_auth
