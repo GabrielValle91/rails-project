@@ -3,11 +3,11 @@ Rails.application.routes.draw do
 
   resources :locations, only: [:index, :show, :new, :create, :edit, :update]
 
-  resources :drivers, only: [:index, :show, :new, :create, :edit, :update] do
-    resources :shipments, only: [:index, :show, :new, :create, :edit, :update]
-  end
+  resources :drivers, only: [:index, :show, :new, :create, :edit, :update]
 
-  resources :shipments, only: [:index, :show, :new, :create, :edit, :update]
+  resources :shipments, only: [:index, :show, :new, :create, :edit, :update] do
+    resources :locations, only: [:new, :create]
+  end
 
   resources :items, only: [:index, :show, :new, :create, :edit, :update]
 
