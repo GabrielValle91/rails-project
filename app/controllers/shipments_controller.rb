@@ -14,7 +14,12 @@ class ShipmentsController < ApplicationController
   end
 
   def create
-    raise params.inspect
+    @shipment = Shipment.create(shipment_params)
+    if @shipment.save
+      redirect_to user_shipments_path(@shipment.user)
+    else
+      redirect_to new_shipment_path
+    end
   end
 
   def edit
@@ -35,7 +40,7 @@ class ShipmentsController < ApplicationController
   end
 
   def shipment_params
-    params.require(:item).permit(:reference, :pickup_date, :deliver_date, :user_id, :client_id, location_shipper: [], location_consignee: [], :driver[:id][])
+    params.require(:shipment).permit(:reference, :pickup_date, :delivery_date, :user_id, :client_name, :client_id, location_shipper: [], location_consignee: [], driver: [])
   end
 
   def user_auth

@@ -2,6 +2,7 @@
   <%= f.label :client_id %>
   <% if params[:client_id] %>
     <%= f.text_field :client_name, {value: "#{current_client.name}", readonly: true}%>
+    <%= f.hidden_field :client_id, {value: "#{current_client.id}", readonly: true} %>
   <% else %>
     <%= f.collection_select :client_id, current_user.clients, :id, :name, prompt: "Please select the client" %>
   <% end %>

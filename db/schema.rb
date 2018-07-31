@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_30_201816) do
+ActiveRecord::Schema.define(version: 2018_07_30_214158) do
 
   create_table "clients", force: :cascade do |t|
     t.string "name"
@@ -52,12 +52,11 @@ ActiveRecord::Schema.define(version: 2018_07_30_201816) do
   create_table "shipment_drivers", force: :cascade do |t|
     t.integer "shipment_id"
     t.integer "driver_id"
-    t.integer "shipment_location_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "driver_type"
     t.index ["driver_id"], name: "index_shipment_drivers_on_driver_id"
     t.index ["shipment_id"], name: "index_shipment_drivers_on_shipment_id"
-    t.index ["shipment_location_id"], name: "index_shipment_drivers_on_shipment_location_id"
   end
 
   create_table "shipment_items", force: :cascade do |t|
@@ -74,12 +73,10 @@ ActiveRecord::Schema.define(version: 2018_07_30_201816) do
   create_table "shipment_locations", force: :cascade do |t|
     t.integer "shipment_id"
     t.integer "location_id"
-    t.integer "shipment_driver_id"
     t.string "location_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["location_id"], name: "index_shipment_locations_on_location_id"
-    t.index ["shipment_driver_id"], name: "index_shipment_locations_on_shipment_driver_id"
     t.index ["shipment_id"], name: "index_shipment_locations_on_shipment_id"
   end
 
