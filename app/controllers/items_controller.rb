@@ -5,7 +5,11 @@ class ItemsController < ApplicationController
 
   def index
     if params[:client_id]
-      @items = current_client.items
+      if current_client.user == current_user
+        @items = current_client.items
+      else
+        @items = current_user.items
+      end
     else
       @items = current_user.items
     end
@@ -22,6 +26,11 @@ class ItemsController < ApplicationController
   end
 
   def new
+    if params[:client_id]
+      if current_client.user != current_user
+        redirect_to new_user_item_path(current_user)
+      end
+    end
   end
 
   def create
@@ -58,6 +67,10 @@ class ItemsController < ApplicationController
     if correct_user
       if !params[:client_id]
         redirect_to edit_client_item_path(@item.client, @item)
+      else
+        if current_client.user != current_user
+          redirect_to new_user_item_path(current_user)
+        end
       end
     else
       redirect_to user_items_path(current_user)
