@@ -1,37 +1,55 @@
 class DriversController < ApplicationController
   before_action :user_auth
-  before_action :make_driver, only: [:new]
-  before_action :find_driver, only: [:show, :edit, :update]
+  before_action :make_driver, only: [:new, :create]
+  before_action :correct_user, only: [:show, :edit, :update]
 
   def index
-    @drivers = Driver.all
+    if !params[:user_id]
+      redirect_to user_drivers_path(current_user)
+    end
+    @drivers = current_user.drivers
   end
 
   def show
+    if !params[:user_id]
+      redirect_to user_driver_path(current_user, @driver)
+    end
   end
 
   def new
+    if !params[:user_id]
+      redirect_to new_user_driver_path(current_user)
+    end
   end
 
   def create
-    @driver = Driver.new(driver_params)
-    if @driver.save
-      redirect_to drivers_path
+    if !params[:user_id]
+      redirect_to new_user_driver_path(current_user)
+    end
+    @driver.user_id = current_user.id
+    if @driver.update(driver_params)
+      redirect_to user_drivers_path(current_user)
     else
       flash[:notice] = @driver.errors.full_messages
-      redirect_to new_driver_path
+      redirect_to new_user_driver_path(current_user)
     end
   end
 
   def edit
+    if !params[:user_id]
+      redirect_to edit_user_driver_path(current_user, @driver)
+    end
   end
 
   def update
+    if !params[:user_id]
+      redirect_to edit_user_driver_path(current_user, @driver)
+    end
     if @driver.update(driver_params)
-      redirect_to drivers_path
+      redirect_to user_drivers_path(current_user)
     else
       flash[:notice] = @driver.errors.full_messages
-      redirect_to new_driver_path
+      redirect_to edit_user_driver_path(current_user, @driver)
     end
   end
 
@@ -45,8 +63,15 @@ class DriversController < ApplicationController
     @driver = Driver.find(params[:id])
   end
 
+  def correct_user #user verification and client finding for show, edit, update methods
+    find_driver
+    if @driver.user.id != current_user.id
+      redirect_to user_drivers_path(current_user)
+    end
+  end
+
   def driver_params
-    params.require(:driver).permit(:name, :license, :driver_type, :user_id)
+    params.require(:driver).permit(:name, :license, :driver_type)
   end
 
   def user_auth

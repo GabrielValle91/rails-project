@@ -26,10 +26,8 @@ class ClientsController < ApplicationController
     if !params[:user_id]
       redirect_to new_user_client_path(current_user)
     end
-    @client.name = params[:client][:name]
     @client.user_id = current_user.id
-    if @client.valid?
-      @client.save
+    if @client.update(client_params)
       redirect_to user_clients_path(current_user)
     else
       flash[:notice] = "#{@client.errors.full_messages}"
@@ -73,7 +71,7 @@ class ClientsController < ApplicationController
   end
 
   def client_params
-    params.require(:client).permit(:name, :user_id)
+    params.require(:client).permit(:name)
   end
 
   def user_auth

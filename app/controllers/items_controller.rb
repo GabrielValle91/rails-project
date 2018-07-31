@@ -34,7 +34,6 @@ class ItemsController < ApplicationController
   end
 
   def create
-    #raise params.inspect
     if !params[:client_id]
       if Client.find(params[:item][:client_id]).user == current_user
         @item = Item.new(item_params)
