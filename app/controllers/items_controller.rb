@@ -2,6 +2,7 @@ class ItemsController < ApplicationController
   before_action :user_auth
   before_action :make_item, only: [:new]
   before_action :find_item, only: [:show]
+  before_action :redirect_if_wrong_user_edit, only: [:edit, :update]
 
   def index
     if params[:client_id]
@@ -44,10 +45,6 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    if !correct_user
-      redirect_to user_items_path(current_user)
-      return
-    end
     if !params[:client_id]
       redirect_to edit_client_item_path(@item.client, @item)
     end
@@ -57,12 +54,8 @@ class ItemsController < ApplicationController
   end
 
   def update
-    if !correct_user
-      redirect_to user_items_path(current_user)
-      return
-    end
     if @item.update(item_params)
-      redirect_to user_client_path(current_user, @item.client)
+      redirect_to user_client_items_path(current_user, @item.client)
     else
       flash[:notice] = @item.errors.full_messages
       redirect_to edit_client_item_path(@item.client)
@@ -85,6 +78,13 @@ class ItemsController < ApplicationController
       return true
     else
       return false
+    end
+  end
+
+  def redirect_if_wrong_user_edit
+    find_item
+    if @item.client.user != current_user
+      redirect_to user_items_path(current_user)
     end
   end
 
