@@ -6,6 +6,7 @@ class ClientsController < ApplicationController
   def index
     if !params[:user_id]
       redirect_to user_clients_path(current_user)
+      return
     end
     @clients = current_user.clients
   end
@@ -25,6 +26,7 @@ class ClientsController < ApplicationController
   def create
     if !params[:user_id]
       redirect_to new_user_client_path(current_user)
+      return
     end
     @client.user_id = current_user.id
     if @client.update(client_params)
@@ -44,6 +46,7 @@ class ClientsController < ApplicationController
   def update
     if !params[:user_id]
       redirect_to edit_user_client_path(current_user, @client)
+      return
     end
     if @client.update(client_params)
       redirect_to user_client_path(current_user, @client)
