@@ -9,3 +9,14 @@
     <% end %>
   </ul>
 </div>
+<div class="client-details">
+  <h3>Top Drivers</h3>
+  Driver Name - Total Shipments
+  <ul>
+    <% @user.drivers.top_5.each do |driver| %>
+      <li>
+        <%= driver.name %> - <%= driver.shipments.uniq.size %>
+      </li>
+    <% end %>
+  </ul>
+</div>
