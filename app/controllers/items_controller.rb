@@ -16,80 +16,68 @@ class ItemsController < ApplicationController
   end
 
   def show
-    if !params[:client_id]
-      if correct_user
-        redirect_to user_client_item_path(current_user, @item.client, @item)
-      else
-        redirect_to user_items_path(current_user)
-      end
+    if !params[:client_id] || !correct_user
+      redirect_to user_items_path(current_user)
+    elsif !params[:client_id]
+      redirect_to user_client_item_path(current_user, @item.client, @item)
     end
   end
 
   def new
-    if params[:client_id]
-      if current_client.user != current_user
-        redirect_to new_user_item_path(current_user)
-      end
+    if params[:client_id] && current_client && current_client.user != current_user
+      redirect_to new_user_item_path(current_user)
     end
   end
 
   def create
-    if !params[:client_id]
-      if Client.find(params[:item][:client_id]).user == current_user
-        @item = Item.new(item_params)
-        if @item.save
-          redirect_to user_client_items_path(current_user, @item.client)
-        else
-          flash[:notice] = @item.errors.full_messages
-          redirect_to new_user_client_item_path(current_user, @item.client)
-        end
-      else
-        redirect_to new_user_item_path(current_user)
-      end
+    if find_client.user != current_user
+      redirect_to new_user_item_path(current_user)
+      return
+    end
+    @item = Item.new(item_params)
+    if @item.save
+      redirect_to user_client_items_path(current_user, @item.client)
     else
-      if current_client.user == current_user
-        @item = Item.new(item_params)
-        if @item.save
-          redirect_to user_client_items_path(current_user, current_client)
-        else
-          flash[:notice] = @item.errors.full_messages
-          redirect_to new_user_client_item_path(current_user, @item.client)
-        end
-      else
-        redirect_to new_user_item_path(current_user)
-      end
+      flash[:notice] = @item.errors.full_messages
+      redirect_to new_user_client_item_path(current_user, @item.client)
     end
   end
 
   def edit
-    #raise params.inspect
-    if correct_user
-      if !params[:client_id]
-        redirect_to edit_client_item_path(@item.client, @item)
-      else
-        if current_client.user != current_user
-          redirect_to new_user_item_path(current_user)
-        end
-      end
-    else
+    if !correct_user
       redirect_to user_items_path(current_user)
+      return
+    end
+    if !params[:client_id]
+      redirect_to edit_client_item_path(@item.client, @item)
+    end
+    if @item.client.user != current_user
+      redirect_to new_user_item_path(current_user)
     end
   end
 
   def update
-    if correct_user
-      if @item.update(item_params)
-        redirect_to user_client_path(current_user, @item.client)
-      else
-        flash[:notice] = @item.errors.full_messages
-        redirect_to edit_client_item_path(@item.client)
-      end
-    else
+    if !correct_user
       redirect_to user_items_path(current_user)
+      return
+    end
+    if @item.update(item_params)
+      redirect_to user_client_path(current_user, @item.client)
+    else
+      flash[:notice] = @item.errors.full_messages
+      redirect_to edit_client_item_path(@item.client)
     end
   end
 
   private
+
+  def find_client
+    if params[:item][:client_id]
+      Client.find(params[:item][:client_id])
+    else
+      Client.find_by(name: params[:item][:client_name])
+    end
+  end
 
   def correct_user
     find_item
