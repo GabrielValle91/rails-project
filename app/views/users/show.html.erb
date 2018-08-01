@@ -4,7 +4,7 @@
   <ul>
     <% @user.clients.top_5.each do |client| %>
       <li>
-        <%= client.name %> - <%= client.shipments.count %>
+        <%= link_to "#{client.name}", user_client_path(current_user, client) %> - <%= client.shipments.count %>
       </li>
     <% end %>
   </ul>
@@ -15,7 +15,7 @@
   <ul>
     <% @user.drivers.top_5.each do |driver| %>
       <li>
-        <%= driver.name %> - <%= driver.shipments.uniq.size %>
+        <%= link_to "#{driver.name}", user_driver_path(current_user, driver) %> - <%= driver.shipments.uniq.size %>
       </li>
     <% end %>
   </ul>
