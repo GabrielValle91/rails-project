@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_many :clients
   has_many :shipments
   has_many :drivers
+  has_many :locations
 
   def items
     user_items = []
