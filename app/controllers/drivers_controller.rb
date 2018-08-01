@@ -2,32 +2,21 @@ class DriversController < ApplicationController
   before_action :user_auth
   before_action :make_driver, only: [:new, :create]
   before_action :correct_user, only: [:show, :edit, :update]
+  before_action :redirect_if_not_nested_new, only: [:new, :create]
+  before_action :redirect_if_not_nested_edit, only: [:edit, :update]
+  before_action :redirect_if_not_nested_show, only: [:index, :show]
 
   def index
-    if !params[:user_id]
-      redirect_to user_drivers_path(current_user)
-      return
-    end
     @drivers = current_user.drivers
   end
 
   def show
-    if !params[:user_id]
-      redirect_to user_driver_path(current_user, @driver)
-    end
   end
 
   def new
-    if !params[:user_id]
-      redirect_to new_user_driver_path(current_user)
-    end
   end
 
   def create
-    if !params[:user_id]
-      redirect_to new_user_driver_path(current_user)
-      return
-    end
     @driver.user_id = current_user.id
     if @driver.update(driver_params)
       redirect_to user_drivers_path(current_user)
@@ -38,16 +27,9 @@ class DriversController < ApplicationController
   end
 
   def edit
-    if !params[:user_id]
-      redirect_to edit_user_driver_path(current_user, @driver)
-    end
   end
 
   def update
-    if !params[:user_id]
-      redirect_to edit_user_driver_path(current_user, @driver)
-      return
-    end
     if @driver.update(driver_params)
       redirect_to user_drivers_path(current_user)
     else
@@ -57,6 +39,24 @@ class DriversController < ApplicationController
   end
 
   private
+
+  def redirect_if_not_nested_new
+    if !params[:user_id]
+      redirect_to new_user_driver_path(current_user)
+    end
+  end
+
+  def redirect_if_not_nested_edit
+    if !params[:user_id]
+      redirect_to edit_user_driver_path(current_user, @driver)
+    end
+  end
+
+  def redirect_if_not_nested_show
+    if !params[:user_id]
+      redirect_to user_drivers_path(current_user)
+    end
+  end
 
   def make_driver
     @driver = Driver.new
