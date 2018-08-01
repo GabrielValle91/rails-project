@@ -1,6 +1,6 @@
 class ClientsController < ApplicationController
   before_action :user_auth
-  before_action :make_client, only: [:new, :create]
+  before_action :make_client, only: [:new]
   before_action :correct_user, only: [:show, :edit, :update]
   before_action :redirect_if_not_nested_new, only: [:new, :create]
   before_action :redirect_if_not_nested_edit, only: [:edit, :update]
@@ -17,8 +17,9 @@ class ClientsController < ApplicationController
   end
 
   def create
-    @client.user_id = current_user.id
-    if @client.update(client_params)
+    @client = Client.new(client_params)
+    @client.user = current_user
+    if @client.save
       redirect_to user_clients_path(current_user)
     else
       flash[:notice] = "#{@client.errors.full_messages}"
