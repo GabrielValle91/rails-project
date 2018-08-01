@@ -1,17 +1,19 @@
 class LocationsController < ApplicationController
   before_action :user_auth
   before_action :make_location, only: [:new]
-  before_action :find_location, only: [:edit, :update, :show]
+  before_action :correct_user, only: [:edit, :update, :show]
+  before_action :redirect_if_not_nested_new, only: [:new, :create]
+  before_action :redirect_if_not_nested_edit, only: [:edit, :update]
+  before_action :redirect_if_not_nested_show, only: [:index, :show]
 
   def index
-    @locations = Location.all
+    @locations = current_user.locations
   end
 
   def show
   end
 
   def new
-    raise params.inspect
   end
 
   def create
@@ -35,7 +37,33 @@ class LocationsController < ApplicationController
       redirect_to edit_location_path(@location)
     end
   end
+
   private
+
+  def redirect_if_not_nested_edit
+    if !params[:user_id]
+      redirect_to edit_user_location_path(current_user, @location)
+    end
+  end
+
+  def redirect_if_not_nested_new
+    if !params[:user_id]
+      redirect_to new_user_location_path(current_user)
+    end
+  end
+
+  def redirect_if_not_nested_show
+    if !params[:user_id]
+      redirect_to user_locations_path(current_user)
+    end
+  end
+
+  def correct_user #user verification and location finding for show, edit, update methods
+    find_location
+    if @location.user.id != current_user.id
+      redirect_to user_locations_path(current_user)
+    end
+  end
 
   def make_location
     @location = Location.new

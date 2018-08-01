@@ -24,6 +24,7 @@ Rails.application.routes.draw do
     resources :shipments, only: [:index, :show, :new, :create, :edit, :update]
     resources :items, only: [:index, :show, :new, :create, :edit, :update]
     resources :drivers, only: [:index, :show, :new, :create, :edit, :update]
+    resources :locations, except: [:delete]
   end
 
   get '/signin', to: 'sessions#new'
