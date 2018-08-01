@@ -1,2 +1,67 @@
 <h2>Create a new shipment</h2>
-<%= render partial: 'form', locals: {shipment: @shipment} %>
+<%= form_for [current_user, @shipment] do |f| %>
+  <%= f.label :client_id %>
+  <% if params[:client_id] %>
+    <%= f.text_field :client_name, {value: "#{current_client.name}", readonly: true}%>
+    <%= f.hidden_field :client_id, {value: "#{current_client.id}", readonly: true} %>
+  <% else %>
+    <%= f.collection_select :client_id, current_user.clients, :id, :name, prompt: "Please select the client" %>
+  <% end %>
+  <br>
+  <%= f.label :reference %>
+  <%= f.text_field :reference %><br>
+  <%= f.label :pickup_date %>
+  <%= f.date_field :pickup_date %>
+  <%= f.label :delivery_date %>
+  <%= f.date_field :delivery_date %><br>
+  <div class = "new-address">
+    Shipper: <select name="[shipment][location_shipper][id]">
+      <option value="" selected="selected">Select a shipper</option>
+      <% Location.all.each do |location| %>
+        <option value="<%= location.id %>"><%= location.company_name %></option>
+      <% end %>
+    </select><br>
+    Or create a new shipper<br>
+    <%= f.fields_for :location_shipper do |location_details| %>
+      Company Name: <%= location_details.text_field :company_name %><br>
+      Address1: <%= location_details.text_field :address1 %><br>
+      Address2: <%= location_details.text_field :address2 %><br>
+      City: <%= location_details.text_field :city %><br>
+      State: <%= location_details.text_field :state %><br>
+      Zip: <%= location_details.text_field :zip_code %><br>
+    <% end %>
+  </div>
+  <div class="new-address">
+    Consignee: <select name="[shipment][location_consignee][id]">
+      <option value="" selected="selected">Select a consignee</option>
+      <% Location.all.each do |location| %>
+        <option value="<%= location.id %>"><%= location.company_name %></option>
+      <% end %>
+    </select>
+    <br>
+    Or create a new consignee<br>
+    <%= f.fields_for :location_consignee do |location_details| %>
+      Company Name: <%= location_details.text_field :company_name %><br>
+      Address1: <%= location_details.text_field :address1 %><br>
+      Address2: <%= location_details.text_field :address2 %><br>
+      City: <%= location_details.text_field :city %><br>
+      State: <%= location_details.text_field :state %><br>
+      Zip: <%= location_details.text_field :zip_code %><br>
+    <% end %>
+  </div>
+  <br>
+  Pickup Driver: <select name="[shipment][location_shipper][driver_id]">
+    <option value="" selected="selected">Select a pickup driver</option>
+    <% current_user.drivers.each do |driver| %>
+      <option value="<%= driver.id %>"><%= driver.name %></option>
+    <% end %>
+  </select>
+  Delivery Driver: <select name="[shipment][location_consignee][driver_id]">
+    <option value="" selected="selected">Select a delivery driver</option>
+    <% current_user.drivers.each do |driver| %>
+      <option value="<%= driver.id %>"><%= driver.name %></option>
+    <% end %>
+  </select>
+  <br>
+  <%= f.submit %>
+<% end %>
