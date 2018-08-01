@@ -2,32 +2,21 @@ class ClientsController < ApplicationController
   before_action :user_auth
   before_action :make_client, only: [:new, :create]
   before_action :correct_user, only: [:show, :edit, :update]
+  before_action :redirect_if_not_nested_new, only: [:new, :create]
+  before_action :redirect_if_not_nested_edit, only: [:edit, :update]
+  before_action :redirect_if_not_nested_show, only: [:index, :show]
 
   def index
-    if !params[:user_id]
-      redirect_to user_clients_path(current_user)
-      return
-    end
     @clients = current_user.clients
   end
 
   def show
-    if !params[:user_id]
-      redirect_to user_client_path(current_user, @client)
-    end
   end
 
   def new
-    if !params[:user_id]
-      redirect_to new_user_client_path(current_user)
-    end
   end
 
   def create
-    if !params[:user_id]
-      redirect_to new_user_client_path(current_user)
-      return
-    end
     @client.user_id = current_user.id
     if @client.update(client_params)
       redirect_to user_clients_path(current_user)
@@ -38,16 +27,9 @@ class ClientsController < ApplicationController
   end
 
   def edit
-    if !params[:user_id]
-      redirect_to edit_user_client_path(current_user, @client)
-    end
   end
 
   def update
-    if !params[:user_id]
-      redirect_to edit_user_client_path(current_user, @client)
-      return
-    end
     if @client.update(client_params)
       redirect_to user_client_path(current_user, @client)
     else
@@ -57,6 +39,24 @@ class ClientsController < ApplicationController
   end
 
   private
+
+  def redirect_if_not_nested_show
+    if !params[:user_id]
+      redirect_to user_clients_path(current_user)
+    end
+  end
+
+  def redirect_if_not_nested_new
+    if !params[:user_id]
+      redirect_to new_user_client_path(current_user)
+    end
+  end
+
+  def redirect_if_not_nested_edit
+    if !params[:user_id]
+      redirect_to edit_user_client_path(current_user, @client)
+    end
+  end
 
   def make_client
     @client = Client.new
