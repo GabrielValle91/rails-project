@@ -3,4 +3,4 @@
 <p>Address1: <%= @location.address1 %></p>
 <p>Address2: <%= @location.address2 %></p>
 <p>City/State/Zip: <%= @location.city %>, <%= @location.state %> <%= @location.zip_code %></p>
-<%= link_to "Edit this location", edit_location_path(@location) %>
+<%= link_to "Edit this location", edit_user_location_path(current_user, @location) %>

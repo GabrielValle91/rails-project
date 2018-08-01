@@ -1,4 +1,4 @@
-<%= form_for location do |f| %>
+<%= form_for [user, location] do |f| %>
   <% if flash[:notice] %>
     <% flash[:notice].each do |msg| %>
       <%= msg %><br>
