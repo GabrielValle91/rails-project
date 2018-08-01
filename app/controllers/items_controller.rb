@@ -1,7 +1,9 @@
 class ItemsController < ApplicationController
   before_action :user_auth
   before_action :make_item, only: [:new]
-  before_action :find_item, only: [:show]
+  before_action :correct_user, only: [:show, :edit, :update]
+  before_action :redirect_if_not_nested_new, only: [:new, :create]
+  before_action :redirect_if_not_nested_show, only: [:index, :show]
   before_action :redirect_if_wrong_user_edit, only: [:edit, :update]
 
   def index
@@ -17,11 +19,6 @@ class ItemsController < ApplicationController
   end
 
   def show
-    if !params[:client_id] || !correct_user
-      redirect_to user_items_path(current_user)
-    elsif !params[:client_id]
-      redirect_to user_client_item_path(current_user, @item.client, @item)
-    end
   end
 
   def new
@@ -45,12 +42,6 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    if !params[:client_id]
-      redirect_to edit_client_item_path(@item.client, @item)
-    end
-    if @item.client.user != current_user
-      redirect_to new_user_item_path(current_user)
-    end
   end
 
   def update
@@ -74,10 +65,26 @@ class ItemsController < ApplicationController
 
   def correct_user
     find_item
-    if @item.client.user == current_user
-      return true
-    else
-      return false
+    if @item.client.user != current_user
+      redirect_to user_items_path(current_user)
+    end
+  end
+
+  def redirect_if_not_nested_show
+    if !params[:user_id]
+      redirect_to user_items_path(current_user)
+    end
+  end
+
+  def redirect_if_not_nested_new
+    if !params[:user_id]
+      redirect_to new_user_item_path(current_user)
+    end
+  end
+
+  def redirect_if_not_nested_edit
+    if !params[:user_id]
+      redirect_to edit_user_item_path(current_user, @item)
     end
   end
 

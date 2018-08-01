@@ -1,8 +1,4 @@
 <h2><%= @item.name %>'s Details</h2>
 <p>Description: <%= @item.description %></p>
 <p>Client: <%= link_to "#{@item.client.name}", user_client_path(current_user, @item.client) %></p>
-<% if params[:client_id] %>
-  <%= link_to "Edit this item", edit_client_item_path(current_client, @item) %>
-<% else %>
-  <%= link_to "Edit this item", edit_item_path(@item) %>
-<% end %>
+<%= link_to "Edit this item", edit_user_item_path(current_user, @item) %>

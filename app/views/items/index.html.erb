@@ -1,5 +1,5 @@
 <h2>Items</h2>
-<%= link_to "Create new item", new_item_path %>
+<%= link_to "Create new item", new_user_item_path(current_user) %>
 <table class="items">
   <thead>
     <tr>
@@ -11,7 +11,7 @@
   <tbody>
     <% @items.each do |item| %>
       <tr>
-        <td><%= link_to "#{item.name}", client_item_path(item.client, item) %></td>
+        <td><%= link_to "#{item.name}", user_item_path(current_user, item) %></td>
         <td><%= item.description %></td>
         <td><%= link_to "#{item.client.name}", user_client_path(current_user, item.client) %></td>
       </tr>
