@@ -13,34 +13,18 @@ class Shipment < ApplicationRecord
   end
 
   def location_shipper=(hash_details)
-    if hash_details[:id]
-      ShipmentDetail.find_or_create_by(shipment_id: self.id, location_id: hash_details[:id], location_type: "shipper")
-    else
-      new_loc = Location.new(company_name: hash_details[:company_name], address1: hash_details[:address1], address2: hash_details[:address2], city: hash_details[:city], state: hash_details[:state], zip_code: hash_details[:zip_code])
-      if new_loc.save
-        ShipmentDetail.find_or_create_by(shipment_id: self.id, location_id: new_loc.id, location_type: "consignee")
-      else
-        return new_loc.errors
-      end
-    end
-    if hash_details[:driver_id]
-      ShipmentDetail.find_or_create_by(shipment_id: self.id, location_id: hash_details[:id], driver_id: hash_details[:driver_id], location_type: "shipper")
+    if self.id
+      new_detail = ShipmentDetail.find_or_create_by(shipment_id: self.id, location_type: "shipper")
+      new_detail.location_id = hash_details[:id] if hash_details[:id]
+      new_detail.driver_id hash_details[:driver_id] if hash_details[:driver_id]
     end
   end
 
   def location_consignee=(hash_details)
-    if hash_details[:id]
-      ShipmentDetail.find_or_create_by(shipment_id: self.id, location_id: hash_details[:id], location_type: "consignee")
-    else
-      new_loc = Location.new(company_name: hash_details[:company_name], address1: hash_details[:address1], address2: hash_details[:address2], city: hash_details[:city], state: hash_details[:state], zip_code: hash_details[:zip_code])
-      if new_loc.save
-        ShipmentDetail.find_or_create_by(shipment_id: self.id, location_id: new_loc.id, location_type: "consignee")
-      else
-        return new_loc.errors
-      end
-    end
-    if hash_details[:driver_id]
-      ShipmentDetail.find_or_create_by(shipment_id: self.id, location_id: hash_details[:id], driver_id: hash_details[:driver_id], location_type: "consignee")
+    if self.id
+      new_detail = ShipmentDetail.find_or_create_by(shipment_id: self.id, location_type: "consignee")
+      new_detail.location_id = hash_details[:id] if hash_details[:id]
+      new_detail.driver_id hash_details[:driver_id] if hash_details[:driver_id]
     end
   end
 end

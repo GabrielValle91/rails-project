@@ -14,4 +14,7 @@ class User < ApplicationRecord
     end
     user_items
   end
+
+  
+
 end

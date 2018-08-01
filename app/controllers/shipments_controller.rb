@@ -19,7 +19,6 @@ class ShipmentsController < ApplicationController
   def create
     @shipment = Shipment.create(shipment_params)
     @shipment.user = current_user
-
     if @shipment.save
       @shipment.update(shipment_params)
       redirect_to user_shipments_path(@shipment.user)
@@ -29,6 +28,9 @@ class ShipmentsController < ApplicationController
   end
 
   def edit
+    @location_shipper = @shipment.shipment_details.where(location_type: "shipper")
+    @location_consignee = @shipment.shipment_details.where(location_type: "consignee")
+    #raise @location_shipper.inspect
   end
 
   def update

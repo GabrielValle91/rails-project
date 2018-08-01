@@ -1,0 +1,11 @@
+<div class="client-details">
+  <h3>Top Clients</h3>
+  Client Name - Total Shipments
+  <ul>
+    <% @user.clients.top_5.each do |client| %>
+      <li>
+        <%= client.name %> - <%= client.shipments.count %>
+      </li>
+    <% end %>
+  </ul>
+</div>

@@ -51,8 +51,8 @@ ActiveRecord::Schema.define(version: 2018_07_31_172054) do
 
   create_table "shipment_details", force: :cascade do |t|
     t.integer "shipment_id"
-    t.integer "driver_id"
-    t.integer "location_id"
+    t.integer "driver_id", default: 1
+    t.integer "location_id", default: 1
     t.string "location_type"
     t.index ["driver_id"], name: "index_shipment_details_on_driver_id"
     t.index ["location_id"], name: "index_shipment_details_on_location_id"
