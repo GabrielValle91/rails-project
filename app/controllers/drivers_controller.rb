@@ -6,6 +6,7 @@ class DriversController < ApplicationController
   def index
     if !params[:user_id]
       redirect_to user_drivers_path(current_user)
+      return
     end
     @drivers = current_user.drivers
   end
@@ -25,6 +26,7 @@ class DriversController < ApplicationController
   def create
     if !params[:user_id]
       redirect_to new_user_driver_path(current_user)
+      return
     end
     @driver.user_id = current_user.id
     if @driver.update(driver_params)
@@ -44,6 +46,7 @@ class DriversController < ApplicationController
   def update
     if !params[:user_id]
       redirect_to edit_user_driver_path(current_user, @driver)
+      return
     end
     if @driver.update(driver_params)
       redirect_to user_drivers_path(current_user)
