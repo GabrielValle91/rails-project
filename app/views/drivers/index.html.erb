@@ -1,5 +1,5 @@
 <h2>Drivers</h2>
-<%= link_to "Create new driver", new_driver_path %><br><br>
+<%= link_to "Create new driver", new_user_driver_path %><br><br>
 <table>
   <thead>
     <tr>
@@ -11,7 +11,7 @@
   <tbody>
     <% @drivers.each do |driver| %>
       <tr>
-        <td><%= link_to "#{driver.name}", driver_path(driver) %></td>
+        <td><%= link_to "#{driver.name}", user_driver_path(current_user, driver) %></td>
         <td><%= driver.license %></td>
         <td><%= driver.driver_type %></td>
       </tr>
