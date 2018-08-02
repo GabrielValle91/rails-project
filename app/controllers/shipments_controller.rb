@@ -28,8 +28,8 @@ class ShipmentsController < ApplicationController
   end
 
   def edit
-    @location_shipper = @shipment.shipment_details.where(location_type: "shipper")
-    @location_consignee = @shipment.shipment_details.where(location_type: "consignee")
+    @location_shipper = @shipment.shipment_details.where(location_type: "shipper").first
+    @location_consignee = @shipment.shipment_details.where(location_type: "consignee").first
     #raise @location_shipper.inspect
   end
 

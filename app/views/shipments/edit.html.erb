@@ -6,16 +6,16 @@
   <%= render partial: "/shipments/form", locals: {f: f} %>
   <div class = "new-address">
     <%= f.fields_for :location_shipper do |location| %>
-      <%= location.collection_select :id, current_user.locations, :id, :company_name, {include_blank: true, selected: "#{@location_shipper.first.location_id}"} %>
+      <%= location.collection_select :id, current_user.locations, :id, :company_name, {include_blank: true, selected: "#{@location_shipper.location_id}"} %>
       <%= render partial: "/shipments/new_address", locals: {location: location, user: current_user} %>
-      Pickup Driver <%= location.collection_select :driver_id, current_user.drivers, :id, :name, {include_blank: true, selected: "#{@location_shipper.first.driver_id}"} %>
+      Pickup Driver <%= location.collection_select :driver_id, current_user.drivers, :id, :name, {include_blank: true, selected: "#{@location_shipper.driver_id}"} %>
     <% end %>
   </div>
   <div class="new-address">
     <%= f.fields_for :location_consignee do |location| %>
-      <%= location.collection_select :id, current_user.locations, :id, :company_name, {include_blank: true, selected: "#{@location_consignee.first.location_id}" }%>
+      <%= location.collection_select :id, current_user.locations, :id, :company_name, {include_blank: true, selected: "#{@location_consignee.location_id}" }%>
       <%= render partial: "/shipments/new_address", locals: {location: location, user: current_user} %>
-      Delivery Driver <%= location.collection_select :driver_id, current_user.drivers, :id, :name, {include_blank: true, selected: "#{@location_consignee.first.driver_id}"} %>
+      Delivery Driver <%= location.collection_select :driver_id, current_user.drivers, :id, :name, {include_blank: true, selected: "#{@location_consignee.driver_id}"} %>
     <% end %>
   </div>
   <br>
