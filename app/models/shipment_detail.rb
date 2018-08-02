@@ -1,7 +1,7 @@
 class ShipmentDetail < ApplicationRecord
   belongs_to :shipment
   belongs_to :driver, optional: true
-  belongs_to :location, optional: true
+  belongs_to :location, optional: true 
 
   scope :shipper, -> { joins(:location).where(location_type: "shipper").limit(1).first}
 

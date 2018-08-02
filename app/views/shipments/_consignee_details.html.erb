@@ -1,0 +1,31 @@
+<% if shipment.shipment_details.where(location_type: "consignee").first %>
+  <% if shipment.shipment_details.where(location_type: "consignee").first[:location_id] %>
+    Consignee Name: <%= shipment.shipment_details.consignee.location.company_name %><br>
+    Address: <%= shipment.shipment_details.consignee.location.address1 %> <%= shipment.shipment_details.consignee.location.address2 %><br>
+    City: <%= shipment.shipment_details.consignee.location.city %><br>
+    State: <%= shipment.shipment_details.consignee.location.state %><br>
+    Zip: <%= shipment.shipment_details.consignee.location.zip_code %><br>
+  <% else %>
+    Consignee Name: None Selected<br>
+    Address: None Selected<br>
+    City: None Selected<br>
+    State: None Selected<br>
+    Zip: None Selected<br>
+  <% end %>
+<% else %>
+  Consignee Name: None Selected<br>
+  Address: None Selected<br>
+  City: None Selected<br>
+  State: None Selected<br>
+  Zip: None Selected<br>
+<% end %>
+<br>
+<% if shipment.shipment_details.where(location_type: "consignee").first %>
+  <% if shipment.shipment_details.where(location_type: "consignee").first[:driver_id] %>
+    Delivery Driver: <%= shipment.shipment_details.delivery_driver.driver.name %>
+  <% else %>
+    Delivery Driver: None Selected
+  <% end %>
+<% else %>
+  Delivery Driver: None Selected
+<% end %>

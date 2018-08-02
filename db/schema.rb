@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_02_041104) do
+ActiveRecord::Schema.define(version: 2018_08_02_195459) do
 
   create_table "clients", force: :cascade do |t|
     t.string "name"
@@ -54,8 +54,8 @@ ActiveRecord::Schema.define(version: 2018_08_02_041104) do
 
   create_table "shipment_details", force: :cascade do |t|
     t.integer "shipment_id"
-    t.integer "driver_id", default: 1
-    t.integer "location_id", default: 1
+    t.integer "driver_id"
+    t.integer "location_id"
     t.string "location_type"
     t.index ["driver_id"], name: "index_shipment_details_on_driver_id"
     t.index ["location_id"], name: "index_shipment_details_on_location_id"

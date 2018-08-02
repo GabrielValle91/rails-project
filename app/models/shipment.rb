@@ -18,7 +18,11 @@ class Shipment < ApplicationRecord
       if hash_details[:company_name]
         new_location(new_detail, hash_details)
       end
-      new_detail.save
+      if new_detail.valid?
+        new_detail.save
+      else
+        return false
+      end
     end
   end
 
