@@ -17,6 +17,7 @@ class Shipment < ApplicationRecord
       new_detail = ShipmentDetail.find_or_create_by(shipment_id: self.id, location_type: "shipper")
       new_detail.location_id = hash_details[:id]
       new_detail.driver_id = hash_details[:driver_id]
+      new_detail.save
     end
   end
 
@@ -25,6 +26,7 @@ class Shipment < ApplicationRecord
       new_detail = ShipmentDetail.find_or_create_by(shipment_id: self.id, location_type: "consignee")
       new_detail.location_id = hash_details[:id]
       new_detail.driver_id = hash_details[:driver_id]
+      new_detail.save
     end
   end
 end

@@ -1,4 +1,4 @@
-<h2>Create a new shipment</h2>
+<h2>New Shipment Details</h2>
 <%= form_for [current_user, @shipment] do |f| %>
   <%= f.label :client_id %>
   <% if params[:client_id] %>
@@ -8,37 +8,22 @@
     <%= f.collection_select :client_id, current_user.clients, :id, :name, prompt: "Please select the client" %>
   <% end %>
   <br>
-  <%= f.label :reference %>
-  <%= f.text_field :reference %><br>
-  <%= f.label :pickup_date %>
-  <%= f.date_field :pickup_date %>
-  <%= f.label :delivery_date %>
-  <%= f.date_field :delivery_date %><br>
+  <%= render partial: "/shipments/form", locals: {f: f} %>
   <div class = "new-address">
     <%= f.fields_for :location_shipper do |location| %>
-      <%= location.collection_select :id, Location.all, :id, :company_name, prompt: "Select a shipper" %>
+      <%= location.collection_select :id, current_user.locations, :id, :company_name, {prompt: "Select a shipper"} %>
+      <%= render partial: "/shipments/new_address", locals: {location: location, user: current_user} %>
+      Pickup Driver <%= location.collection_select :driver_id, current_user.drivers, :id, :name, {prompt: "Select a pickup driver"} %>
     <% end %>
   </div>
   <div class="new-address">
     <%= f.fields_for :location_consignee do |location| %>
-      <%= location.collection_select :id, Location.all, :id, :company_name, prompt: "Select a consignee" %>
+      <%= location.collection_select :id, current_user.locations, :id, :company_name, {prompt: "Select a consignee"} %>
+      <%= render partial: "/shipments/new_address", locals: {location: location, user: current_user} %>
+      Delivery Driver <%= location.collection_select :driver_id, current_user.drivers, :id, :name, {prompt: "Select a delivery driver"} %>
     <% end %>
   </div>
   <br>
-  <div>
-    Pickup Driver: <select name="[shipment][location_shipper][driver_id]">
-      <option value="" selected="selected">Select a pickup driver</option>
-      <% current_user.drivers.each do |driver| %>
-        <option value="<%= driver.id %>"><%= driver.name %></option>
-      <% end %>
-    </select>
-    Delivery Driver: <select name="[shipment][location_consignee][driver_id]">
-      <option value="" selected="selected">Select a delivery driver</option>
-      <% current_user.drivers.each do |driver| %>
-        <option value="<%= driver.id %>"><%= driver.name %></option>
-      <% end %>
-    </select>
-  </div>
   <br>
   <%= f.submit %>
 <% end %>

@@ -1,0 +1,7 @@
+Or create a new shipper<br>
+Company Name: <%= location.text_field :company_name %><br>
+Address1: <%= location.text_field :address1 %><br>
+Address2: <%= location.text_field :address2 %><br>
+City: <%= location.text_field :city %><br>
+State: <%= location.select :state, Location::STATES, {include_blank: true} %><br>
+Zip: <%= location.text_field :zip_code %><br><br>
