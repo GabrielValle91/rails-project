@@ -1,7 +1,7 @@
 class ShipmentsController < ApplicationController
   before_action :user_auth
   before_action :make_shipment, only: [:new]
-  before_action :find_shipment, only: [:show, :edit, :update]
+  before_action :correct_user, only: [:show, :edit, :update]
 
   def index
     @shipments = current_user.shipments
@@ -17,6 +17,7 @@ class ShipmentsController < ApplicationController
   end
 
   def create
+
     @shipment = Shipment.create(shipment_params)
     @shipment.user = current_user
     if @shipment.save
@@ -42,6 +43,13 @@ class ShipmentsController < ApplicationController
 
   def make_shipment
     @shipment = Shipment.new
+  end
+
+  def correct_user
+    find_shipment
+    if @shipment.user != current_user
+      redirect_to user_shipments_path(current_user)
+    end
   end
 
   def find_shipment

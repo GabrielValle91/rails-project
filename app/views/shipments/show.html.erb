@@ -1,5 +1,5 @@
 <h2>Shipment <%= @shipment.id %> Details</h2>
-<%= link_to "Edit this shipment", user_shipment_path(current_user, @shipment) %><br>
+<%= link_to "Edit this shipment", edit_user_shipment_path(current_user, @shipment) %><br>
 <br>
 Client: <%= @shipment.client.name %><br>
 Pickup Date: <%= @shipment.pickup_date %><br>

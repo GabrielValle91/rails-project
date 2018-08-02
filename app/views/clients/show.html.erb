@@ -4,7 +4,7 @@
 </div>
 <div class="client-items">
   <h4>Item Details</h4>
-  <%= link_to "Create new item", new_user_client_item_path(current_user, @client) %>
+  <%= link_to "Create new item", new_user_item_path(current_user) %>
   <table>
     <thead>
       <tr>
@@ -15,7 +15,7 @@
     <tbody>
       <% @client.items.each do |item| %>
         <tr>
-          <td><%= link_to "#{item.name}", user_client_item_path(current_user, @client, item) %></td>
+          <td><%= link_to "#{item.name}", user_item_path(current_user, item) %></td>
           <td><%= item.description %></td>
         </tr>
       <% end %>
@@ -24,5 +24,5 @@
 </div>
 <div class="shipment-details">
   <h4>Shipment Details</h4>
-  <%= link_to "Create new shipment", new_user_client_shipment_url(current_user, @client) %>
+  <%= link_to "Create new shipment", new_user_shipment_url(current_user) %>
 </div>
