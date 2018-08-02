@@ -6,6 +6,7 @@
       <td>Driver Name</td>
       <td>License Type</td>
       <td>Driver Type</td>
+      <td>Status</td>
     </tr>
   </thead>
   <tbody>
@@ -14,6 +15,7 @@
         <td><%= link_to "#{driver.name}", user_driver_path(current_user, driver) %></td>
         <td><%= driver.license %></td>
         <td><%= driver.driver_type %></td>
+        <td><%= driver.status ? "Active" : "Inactive" %></td>
       </tr>
     <% end %>
   </tbody>

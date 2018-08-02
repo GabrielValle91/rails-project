@@ -10,5 +10,7 @@
   <%= f.select :license, Driver::LICENSES, {include_blank: true} %><br>
   <%= f.label :driver_type %>
   <%= f.select :driver_type, Driver::DRIVERTYPES, {include_blank: true} %><br>
+  <%= f.label :status, value="Active?" %>
+  <%= f.check_box :status %><br>
   <%= f.submit %>
 <% end %>

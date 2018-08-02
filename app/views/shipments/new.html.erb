@@ -13,14 +13,14 @@
     <%= f.fields_for :location_shipper do |location| %>
       <%= location.collection_select :id, current_user.locations, :id, :company_name, {prompt: "Select a shipper"} %>
       <%= render partial: "/shipments/new_address", locals: {location: location, user: current_user} %>
-      Pickup Driver <%= location.collection_select :driver_id, current_user.drivers, :id, :name, {prompt: "Select a pickup driver"} %>
+      Pickup Driver <%= location.collection_select :driver_id, current_user.drivers.active, :id, :name, {prompt: "Select a pickup driver"} %>
     <% end %>
   </div>
   <div class="new-address">
     <%= f.fields_for :location_consignee do |location| %>
       <%= location.collection_select :id, current_user.locations, :id, :company_name, {prompt: "Select a consignee"} %>
       <%= render partial: "/shipments/new_address", locals: {location: location, user: current_user} %>
-      Delivery Driver <%= location.collection_select :driver_id, current_user.drivers, :id, :name, {prompt: "Select a delivery driver"} %>
+      Delivery Driver <%= location.collection_select :driver_id, current_user.drivers.active, :id, :name, {prompt: "Select a delivery driver"} %>
     <% end %>
   </div>
   <br>

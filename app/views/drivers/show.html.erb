@@ -1,4 +1,5 @@
 <h2><%= @driver.name %>'s Details</h2>
+<p>This driver is <%= @driver.status ? "Active" : "Inactive" %></p>
 <p>License: <%= @driver.license %></p>
 <p>Driver Type: <%= @driver.driver_type %></p>
 <%= link_to "Edit this driver", edit_user_driver_path(current_user, @driver) %>

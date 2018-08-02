@@ -8,4 +8,6 @@ class Driver < ApplicationRecord
   DRIVERTYPES = ["Employee", "Owner Operator"]
 
   scope :top_5, -> { joins(:shipment_details).group(:driver_id).order('COUNT(DISTINCT shipment_id) DESC').limit(5)}
+
+  scope :active, -> { where(status: true)}
 end
