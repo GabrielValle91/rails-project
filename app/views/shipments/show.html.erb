@@ -1,0 +1,24 @@
+<h2>Shipment <%= @shipment.id %> Details</h2>
+<%= link_to "Edit this shipment", user_shipment_path(current_user, @shipment) %><br>
+<br>
+Client: <%= @shipment.client.name %><br>
+Pickup Date: <%= @shipment.pickup_date %><br>
+<br>
+<div class="shipper-info">
+  Shipper Name: <%= @shipment.shipment_details.shipper.location.company_name %><br>
+  Address: <%= @shipment.shipment_details.shipper.location.address1 %> <%= @shipment.shipment_details.shipper.location.address2 %><br>
+  City: <%= @shipment.shipment_details.shipper.location.city %><br>
+  State: <%= @shipment.shipment_details.shipper.location.state %><br>
+  Zip: <%= @shipment.shipment_details.shipper.location.zip_code %><br>
+  <br>
+  Pickup Driver: <%= @shipment.shipment_details.pickup_driver.driver.name %>
+</div>
+<div class="consignee-info">
+  Consignee Name: <%= @shipment.shipment_details.consignee.location.company_name %><br>
+  Address: <%= @shipment.shipment_details.shipper.location.address1 %> <%= @shipment.shipment_details.consignee.location.address2 %><br>
+  City: <%= @shipment.shipment_details.consignee.location.city %><br>
+  State: <%= @shipment.shipment_details.consignee.location.state %><br>
+  Zip: <%= @shipment.shipment_details.consignee.location.zip_code %><br>
+  <br>
+  Delivery Driver: <%= @shipment.shipment_details.delivery_driver.driver.name %>
+</div>
