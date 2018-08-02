@@ -1,12 +1,7 @@
 <h2>New Shipment Details</h2>
 <%= form_for [current_user, @shipment] do |f| %>
   <%= f.label :client_id %>
-  <% if params[:client_id] %>
-    <%= f.text_field :client_name, {value: "#{current_client.name}", readonly: true}%>
-    <%= f.hidden_field :client_id, {value: "#{current_client.id}", readonly: true} %>
-  <% else %>
-    <%= f.collection_select :client_id, current_user.clients, :id, :name, prompt: "Please select the client" %>
-  <% end %>
+  <%= f.collection_select :client_id, current_user.clients, :id, :name, prompt: "Select a client" %>
   <br>
   <%= render partial: "/shipments/form", locals: {f: f} %>
   <div class = "new-address">
