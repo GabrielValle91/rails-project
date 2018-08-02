@@ -3,7 +3,9 @@
     <%= flash[:notice] %>
   <% end %>
   <%= f.label :name %>
-  <%= f.text_field :name %>
+  <%= f.text_field :name %><br>
+  <%= f.label :status, value="Active?"%>
+  <%= f.check_box :status %>
   <br>
   <%= f.submit %>
 <% end %>

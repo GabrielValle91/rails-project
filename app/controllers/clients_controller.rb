@@ -75,7 +75,7 @@ class ClientsController < ApplicationController
   end
 
   def client_params
-    params.require(:client).permit(:name)
+    params.require(:client).permit(:name, :status)
   end
 
   def user_auth
