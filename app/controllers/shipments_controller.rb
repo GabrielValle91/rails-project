@@ -2,6 +2,9 @@ class ShipmentsController < ApplicationController
   before_action :user_auth
   before_action :make_shipment, only: [:new]
   before_action :correct_user, only: [:show, :edit, :update]
+  before_action :redirect_if_not_nested_show, only: [:index, :show]
+  before_action :redirect_if_not_nested_new, only: [:new, :create]
+  before_action :redirect_if_not_nested_edit, only: [:edit, :update]
 
   def index
     @shipments = current_user.shipments
@@ -11,14 +14,11 @@ class ShipmentsController < ApplicationController
   end
 
   def new
-    if !params[:user_id]
-      redirect_to new_user_shipment_path(current_user)
-    end
   end
 
   def create
     if !find_client || find_client.user != current_user
-      flash[:notice] = "something went wrong, try again"
+      flash[:notice] = ["","something went wrong, try again"]
       redirect_to new_user_shipment_path(current_user)
       return
     end
@@ -44,6 +44,22 @@ class ShipmentsController < ApplicationController
   end
 
   private
+
+  def redirect_if_not_nested_show
+    if !params[:user_id]
+      redirect_to user_shipments_path(current_user)
+    end
+  end
+  def redirect_if_not_nested_new
+    if !params[:user_id]
+      redirect_to new_user_shipment_path(current_user, @shipment)
+    end
+  end
+  def redirect_if_not_nested_edit
+    if !params[:user_id]
+      redirect_to edit_user_shipment_path(current_user, @shipment)
+    end
+  end
 
   def make_shipment
     @shipment = Shipment.new
