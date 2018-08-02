@@ -15,16 +15,16 @@ class Shipment < ApplicationRecord
   def location_shipper=(hash_details)
     if self.id
       new_detail = ShipmentDetail.find_or_create_by(shipment_id: self.id, location_type: "shipper")
-      new_detail.location_id = hash_details[:id] if hash_details[:id]
-      new_detail.driver_id hash_details[:driver_id] if hash_details[:driver_id]
+      new_detail.location_id = hash_details[:id]
+      new_detail.driver_id = hash_details[:driver_id]
     end
   end
 
   def location_consignee=(hash_details)
     if self.id
       new_detail = ShipmentDetail.find_or_create_by(shipment_id: self.id, location_type: "consignee")
-      new_detail.location_id = hash_details[:id] if hash_details[:id]
-      new_detail.driver_id hash_details[:driver_id] if hash_details[:driver_id]
+      new_detail.location_id = hash_details[:id]
+      new_detail.driver_id = hash_details[:driver_id]
     end
   end
 end

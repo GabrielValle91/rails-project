@@ -34,7 +34,8 @@ class ShipmentsController < ApplicationController
   end
 
   def update
-
+    @shipment.update(shipment_params)
+    redirect_to user_shipment_path(current_user, @shipment)
   end
 
   private

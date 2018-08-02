@@ -1,5 +1,4 @@
 <h2>Edit Shipment Details</h2>
-<!-- <%= render partial: 'form', locals: {user: current_user, shipment: @shipment, location_shipper: @location_shipper} %> -->
 <%= form_for [current_user, @shipment] do |f| %>
   <%= f.label :client_id %>
   <% if params[:client_id] %>
@@ -17,43 +16,31 @@
   <%= f.date_field :delivery_date %><br>
   <div class = "new-address">
     <%= f.fields_for :location_shipper do |location| %>
-      <%= location.select :id, Location.all.collect {|loc| loc.company_name}, selected %>
+      <%= location.collection_select :id, current_user.locations, :id, :company_name, {include_blank: true, selected: "#{@location_shipper.first.location_id}"} %>
       Or create a new shipper<br>
       Company Name: <%= location.text_field :company_name %><br>
       Address1: <%= location.text_field :address1 %><br>
       Address2: <%= location.text_field :address2 %><br>
       City: <%= location.text_field :city %><br>
       State: <%= location.select :state, Location::STATES, {include_blank: true} %><br>
-      Zip: <%= location.text_field :zip_code %><br>
+      Zip: <%= location.text_field :zip_code %><br><br>
+      Pickup Driver <%= location.collection_select :driver_id, current_user.drivers, :id, :name, {include_blank: true, selected: "#{@location_shipper.first.driver_id}"} %>
     <% end %>
   </div>
   <div class="new-address">
     <%= f.fields_for :location_consignee do |location| %>
-      <%= location.collection_select :id, Location.all, :id, :company_name, prompt: "Select a consignee" %>
+      <%= location.collection_select :id, current_user.locations, :id, :company_name, {include_blank: true, selected: "#{@location_consignee.first.location_id}" }%>
       Or create a new consignee<br>
       Company Name: <%= location.text_field :company_name %><br>
       Address1: <%= location.text_field :address1 %><br>
       Address2: <%= location.text_field :address2 %><br>
       City: <%= location.text_field :city %><br>
       State: <%= location.select :state, Location::STATES, {include_blank: true} %><br>
-      Zip: <%= location.text_field :zip_code %><br>
+      Zip: <%= location.text_field :zip_code %><br><br>
+      Delivery Driver <%= location.collection_select :driver_id, current_user.drivers, :id, :name, {include_blank: true, selected: "#{@location_consignee.first.driver_id}"} %>
     <% end %>
   </div>
   <br>
-  <div>
-    Pickup Driver: <select name="[shipment][location_shipper][driver_id]">
-      <option value="" selected="selected">Select a pickup driver</option>
-      <% current_user.drivers.each do |driver| %>
-        <option value="<%= driver.id %>"><%= driver.name %></option>
-      <% end %>
-    </select>
-    Delivery Driver: <select name="[shipment][location_consignee][driver_id]">
-      <option value="" selected="selected">Select a delivery driver</option>
-      <% current_user.drivers.each do |driver| %>
-        <option value="<%= driver.id %>"><%= driver.name %></option>
-      <% end %>
-    </select>
-  </div>
   <br>
   <%= f.submit %>
 <% end %>
