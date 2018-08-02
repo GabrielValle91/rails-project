@@ -40,8 +40,8 @@
         <tr>
           <td><%= link_to "#{shipment.id}", user_shipment_path(current_user, shipment) %></td>
           <td><%= shipment.reference %></td>
-          <td><%= shipment.pickup_date %></td>
-          <td><%= shipment.delivery_date %></td>
+          <td><%= shipping_date(shipment) %></td>
+          <td><%= delivery_date(shipment) %></td>
         </tr>
       <% end %>
     </tbody>
