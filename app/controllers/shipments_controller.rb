@@ -17,7 +17,11 @@ class ShipmentsController < ApplicationController
   end
 
   def create
-
+    if !find_client || find_client.user != current_user
+      flash[:notice] = "something went wrong, try again"
+      redirect_to new_user_shipment_path(current_user)
+      return
+    end
     @shipment = Shipment.create(shipment_params)
     @shipment.user = current_user
     if @shipment.save
@@ -49,6 +53,14 @@ class ShipmentsController < ApplicationController
     find_shipment
     if @shipment.user != current_user
       redirect_to user_shipments_path(current_user)
+    end
+  end
+
+  def find_client
+    if params[:shipment][:client_id] != ""
+      Client.find(params[:shipment][:client_id])
+    else
+      return false
     end
   end
 

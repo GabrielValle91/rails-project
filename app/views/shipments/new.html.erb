@@ -1,5 +1,8 @@
 <h2>New Shipment Details</h2>
 <%= form_for [current_user, @shipment] do |f| %>
+  <% if flash[:notice] %>
+    <%= flash[:notice] %><br>
+  <% end %>
   <%= f.label :client_id %>
   <%= f.collection_select :client_id, current_user.clients, :id, :name, prompt: "Select a client" %>
   <br>
