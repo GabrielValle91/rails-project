@@ -1,10 +1,10 @@
 <div class="client-details">
   <h3>Top Clients</h3>
-  Client Name - Total Shipments
+  <br>
   <ul>
     <% @user.clients.top_5.each do |client| %>
       <li>
-        <%= link_to "#{client.name}", user_client_path(current_user, client) %> - <%= client.shipments.completed.count %>
+        <%= link_to "#{client.name}", user_client_path(current_user, client) %>
       </li>
     <% end %>
   </ul>

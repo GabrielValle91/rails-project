@@ -52,5 +52,4 @@ class Shipment < ApplicationRecord
       shipment_detail.location_id = new_loc.id
     end
   end
-  scope :completed, -> { where(status: 'completed')}
 end
