@@ -32,8 +32,6 @@
         <td>Reference</td>
         <td>Pickup Date</td>
         <td>Delivery Date</td>
-        <td>Shipper</td>
-        <td>Consignee</td>
       </tr>
     </thead>
     <tbody>
@@ -43,8 +41,6 @@
           <td><%= shipment.reference %></td>
           <td><%= shipment.pickup_date %></td>
           <td><%= shipment.delivery_date %></td>
-          <td><%= shipment.shipment_details.shipper.location.company_name %></td>
-          <td><%= shipment.shipment_details.consignee.location.company_name %></td>
         </tr>
       <% end %>
     </tbody>
