@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 2018_08_02_041104) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "status"
+    t.boolean "status", default: true
     t.index ["user_id"], name: "index_clients_on_user_id"
   end
 
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 2018_08_02_041104) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"
-    t.boolean "status"
+    t.boolean "status", default: true
   end
 
   create_table "items", force: :cascade do |t|

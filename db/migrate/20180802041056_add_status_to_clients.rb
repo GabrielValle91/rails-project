@@ -1,5 +1,5 @@
 class AddStatusToClients < ActiveRecord::Migration[5.2]
   def change
-    add_column :clients, :status, :boolean
+    add_column :clients, :status, :boolean, default: true
   end
 end
