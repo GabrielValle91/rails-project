@@ -2,7 +2,9 @@
 <%= link_to "Edit this shipment", edit_user_shipment_path(current_user, @shipment) %><br>
 <br>
 Client: <%= @shipment.client.name %><br>
+Reference: <%= @shipment.reference %><br>
 Pickup Date: <%= @shipment.pickup_date %><br>
+Delivery Date: <%= @shipment.delivery_date %><br>
 <br>
 <div class="shipper-info">
   Shipper Name: <%= @shipment.shipment_details.shipper.location.company_name %><br>

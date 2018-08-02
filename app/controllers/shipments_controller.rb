@@ -22,12 +22,13 @@ class ShipmentsController < ApplicationController
       redirect_to new_user_shipment_path(current_user)
       return
     end
-    @shipment = Shipment.create(shipment_params)
+    @shipment = Shipment.new(shipment_params)
     @shipment.user = current_user
     if @shipment.save
       @shipment.update(shipment_params)
       redirect_to user_shipments_path(@shipment.user)
     else
+      flash[:notice] = @shipment.errors.full_messages
       redirect_to new_shipment_path
     end
   end
@@ -35,12 +36,15 @@ class ShipmentsController < ApplicationController
   def edit
     @location_shipper = @shipment.shipment_details.where(location_type: "shipper").first
     @location_consignee = @shipment.shipment_details.where(location_type: "consignee").first
-    #raise @location_shipper.inspect
   end
 
   def update
-    @shipment.update(shipment_params)
-    redirect_to user_shipment_path(current_user, @shipment)
+    if @shipment.update(shipment_params)
+      redirect_to user_shipment_path(current_user, @shipment)
+    else
+      flash[:notice] = @shipment.errors.full_messages
+      redirect_to edit_user_shipment_path(current_user, @shipment)
+    end
   end
 
   private
@@ -50,11 +54,13 @@ class ShipmentsController < ApplicationController
       redirect_to user_shipments_path(current_user)
     end
   end
+
   def redirect_if_not_nested_new
     if !params[:user_id]
       redirect_to new_user_shipment_path(current_user, @shipment)
     end
   end
+
   def redirect_if_not_nested_edit
     if !params[:user_id]
       redirect_to edit_user_shipment_path(current_user, @shipment)
