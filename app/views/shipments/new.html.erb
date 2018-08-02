@@ -6,7 +6,7 @@
     <% end %>
   <% end %>
   <%= f.label :client_id %>
-  <%= f.collection_select :client_id, current_user.clients, :id, :name, prompt: "Select a client" %>
+  <%= f.collection_select :client_id, current_user.clients.active, :id, :name, prompt: "Select a client" %>
   <br>
   <%= render partial: "/shipments/form", locals: {f: f} %>
   <div class = "new-address">
