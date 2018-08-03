@@ -1,17 +1,9 @@
-<% if shipment.shipment_details.where(location_type: "shipper").first %>
-  <% if shipment.shipment_details.where(location_type: "shipper").first[:location_id] %>
-    Shipper Name: <%= shipment.shipment_details.shipper.location.company_name %><br>
-    Address: <%= shipment.shipment_details.shipper.location.address1 %> <%= shipment.shipment_details.shipper.location.address2 %><br>
-    City: <%= shipment.shipment_details.shipper.location.city %><br>
-    State: <%= shipment.shipment_details.shipper.location.state %><br>
-    Zip: <%= shipment.shipment_details.shipper.location.zip_code %><br>
-  <% else %>
-    Shipper Name: None Selected<br>
-    Address: None Selected<br>
-    City: None Selected<br>
-    State: None Selected<br>
-    Zip: None Selected<br>
-  <% end %>
+<% if shipment.shipment_details.where(location_type: "shipper").first && shipment.shipment_details.where(location_type: "shipper").first[:location_id] %>
+  Shipper Name: <%= shipment.shipment_details.shipper.location.company_name %><br>
+  Address: <%= shipment.shipment_details.shipper.location.address1 %> <%= shipment.shipment_details.shipper.location.address2 %><br>
+  City: <%= shipment.shipment_details.shipper.location.city %><br>
+  State: <%= shipment.shipment_details.shipper.location.state %><br>
+  Zip: <%= shipment.shipment_details.shipper.location.zip_code %><br>
 <% else %>
   Shipper Name: None Selected<br>
   Address: None Selected<br>
@@ -20,12 +12,8 @@
   Zip: None Selected<br>
 <% end %>
 <br>
-<% if shipment.shipment_details.where(location_type: "shipper").first %>
-  <% if shipment.shipment_details.where(location_type: "shipper").first[:driver_id] %>
-    Pickup Driver: <%= shipment.shipment_details.pickup_driver.driver.name %>
-  <% else %>
-    Pickup Driver: None Selected
-  <% end %>
+<% if shipment.shipment_details.where(location_type: "shipper").first && shipment.shipment_details.where(location_type: "shipper").first[:driver_id] %>
+  Pickup Driver: <%= shipment.shipment_details.pickup_driver.driver.name %>
 <% else %>
   Pickup Driver: None Selected
 <% end %>
