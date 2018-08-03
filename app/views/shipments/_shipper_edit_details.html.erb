@@ -1,0 +1,7 @@
+<% if location_shipper %>
+  <%= location.collection_select :id, current_user.locations, :id, :company_name, {include_blank: true, selected: "#{location_shipper.location_id}"} %>
+  Pickup Driver <%= location.collection_select :driver_id, current_user.drivers.active, :id, :name, {include_blank: true, selected: "#{location_shipper.driver_id}"} %>
+<% else %>
+  <%= location.collection_select :id, current_user.locations, :id, :company_name, {prompt: "Select a shipper"} %>
+  Pickup Driver <%= location.collection_select :driver_id, current_user.drivers.active, :id, :name, {prompt: "Select a pickup driver"} %>
+<% end %>
