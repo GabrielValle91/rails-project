@@ -7,25 +7,14 @@ class SessionsController < ApplicationController
       redirect_to user_path(User.find(session[:id]))
     else
       if auth_hash = request.env["omniauth.auth"]
-        user_name = auth_hash[:info][:name]
-        user_email = auth_hash[:info][:email]
-        if @user = User.find_by(email: user_email)
-          session[:user_id] = @user.id
-          redirect_to user_path(@user)
-        else
-          @user = User.new(username: user_name, email: user_email, password: SecureRandom.hex)
-          if @user.save
-            session[:user_id] = @user.id
-            redirect_to user_path(@user)
-          else
-            redirect_to signin_url, notice: "something went wrong, please try again"
-          end
-        end
+        @user = User.find_or_create_by_omniauth(auth_hash)
+        session[:user_id] = @user.id
+        redirect_to root_url
       else
         @user = User.find_by(username: params[:username])
         if @user && @user.authenticate(params[:password])
           session[:user_id] = @user.id
-          redirect_to user_path(@user)
+          redirect_to root_url
         else
           redirect_to signin_url, notice: "incorrect username/password combination"
         end

@@ -15,4 +15,14 @@ class User < ApplicationRecord
     end
     user_items
   end
+
+  def self.find_or_create_by_omniauth(auth_hash)
+    user_email = auth_hash[:info][:email]
+    if user = User.find_by(email: user_email)
+      return user
+    else
+      user_name = auth_hash[:info][:name]
+      user = User.create(username: user_name, email: user_email, password: SecureRandom.hex)
+    end
+  end
 end
