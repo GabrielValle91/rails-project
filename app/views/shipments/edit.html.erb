@@ -6,16 +6,32 @@
   <%= render partial: "/shipments/form", locals: {f: f} %>
   <div class = "new-address">
     <%= f.fields_for :location_shipper do |location| %>
-      <%= location.collection_select :id, current_user.locations, :id, :company_name, {include_blank: true, selected: "#{@location_shipper.location_id}"} %>
+      <% if @location_shipper %>
+        <%= location.collection_select :id, current_user.locations, :id, :company_name, {include_blank: true, selected: "#{@location_shipper.location_id}"} %>
+      <% else %>
+        <%= location.collection_select :id, current_user.locations, :id, :company_name, {prompt: "Select a shipper"} %>
+      <% end %>
       <%= render partial: "/shipments/new_address", locals: {location: location, user: current_user} %>
-      Pickup Driver <%= location.collection_select :driver_id, current_user.drivers.active, :id, :name, {include_blank: true, selected: "#{@location_shipper.driver_id}"} %>
+      <% if @location_shipper %>
+        Pickup Driver <%= location.collection_select :driver_id, current_user.drivers.active, :id, :name, {include_blank: true, selected: "#{@location_shipper.driver_id}"} %>
+      <% else %>
+        Pickup Driver <%= location.collection_select :driver_id, current_user.drivers.active, :id, :name, {prompt: "Select a pickup driver"} %>
+      <% end %>
     <% end %>
   </div>
   <div class="new-address">
     <%= f.fields_for :location_consignee do |location| %>
-      <%= location.collection_select :id, current_user.locations, :id, :company_name, {include_blank: true, selected: "#{@location_consignee.location_id}" }%>
+      <% if @location_consignee %>
+        <%= location.collection_select :id, current_user.locations, :id, :company_name, {include_blank: true, selected: "#{@location_consignee.location_id}" }%>
+      <% else %>
+        <%= location.collection_select :id, current_user.locations, :id, :company_name, {prompt: "Select a consignee"} %>
+      <% end %>
       <%= render partial: "/shipments/new_address", locals: {location: location, user: current_user} %>
-      Delivery Driver <%= location.collection_select :driver_id, current_user.drivers.active, :id, :name, {include_blank: true, selected: "#{@location_consignee.driver_id}"} %>
+      <% if @location_consignee %>
+        Delivery Driver <%= location.collection_select :driver_id, current_user.drivers.active, :id, :name, {include_blank: true, selected: "#{@location_consignee.driver_id}"} %>
+      <% else %>
+        Delivery Driver <%= location.collection_select :driver_id, current_user.drivers.active, :id, :name, {prompt: "Select a delivery driver"} %>
+      <% end %>
     <% end %>
   </div>
   <br>
