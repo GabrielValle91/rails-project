@@ -1,32 +1,33 @@
 Rails.application.routes.draw do
   root 'application#homepage'
 
-  resources :locations, only: [:index, :show, :new, :create, :edit, :update]
+  resources :locations, except: [:delete]
 
-  resources :drivers, only: [:index, :show, :new, :create, :edit, :update]
+  resources :drivers, except: [:delete]
 
-  resources :shipments, only: [:index, :show, :new, :create, :edit, :update] do
+  resources :shipments, except: [:delete] do
     resources :locations, only: [:new, :create]
   end
 
-  resources :items, only: [:index, :show, :new, :create, :edit, :update]
+  resources :items, except: [:delete]
 
-  resources :clients, only: [:index, :show, :new, :create, :edit, :update] do
-    resources :shipments, only: [:index, :show, :new, :create, :edit, :update]
-    resources :items, only: [:index, :show, :new, :create, :edit, :update]
+  resources :clients, except: [:delete] do
+    resources :shipments, except: [:delete]
+    resources :items, except: [:delete]
   end
 
   resources :users, only: [:show, :new, :create] do
-    resources :clients, only: [:index, :show, :new, :create, :edit, :update]do
-      resources :items, only: [:index, :show, :new, :create, :edit, :update]
+    resources :clients, except: [:delete]do
+      resources :items, except: [:delete]
     end
-    resources :shipments, only: [:index, :show, :new, :create, :edit, :update]
-    resources :items, only: [:index, :show, :new, :create, :edit, :update]
-    resources :drivers, only: [:index, :show, :new, :create, :edit, :update]
+    resources :shipments, except: [:delete]
+    resources :items, except: [:delete]
+    resources :drivers, except: [:delete]
     resources :locations, except: [:delete]
   end
 
   get '/signin', to: 'sessions#new'
   post '/signin', to: 'sessions#create'
   get '/logout', to: 'sessions#logout'
+  get '/auth/:provider/callback', to: 'sessions#create'
 end
