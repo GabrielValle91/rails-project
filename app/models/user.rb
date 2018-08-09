@@ -8,6 +8,8 @@ class User < ApplicationRecord
   has_many :drivers
   has_many :locations
 
+  scope :active_users, -> {joins(:shipments).group(:user_id).order('COUNT(user_id) DESC').having('COUNT(user_id) >= 5')}
+
   def items
     user_items = []
     self.clients.each do |client|

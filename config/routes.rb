@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     resources :items, except: [:delete]
   end
 
-  resources :users, only: [:show, :new, :create] do
+  resources :users, only: [:show, :new, :create, :index] do
     resources :clients, except: [:delete]do
       resources :items, except: [:delete]
     end
