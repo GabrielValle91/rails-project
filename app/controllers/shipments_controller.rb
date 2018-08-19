@@ -2,7 +2,7 @@ class ShipmentsController < ApplicationController
   before_action :user_auth
   before_action :make_shipment, only: [:new]
   before_action :correct_user, only: [:show, :edit, :update]
-  before_action :redirect_if_not_nested_show, only: [:index, :show]
+  before_action :redirect_if_not_nested_show, only: [:index]
   before_action :redirect_if_not_nested_new, only: [:new, :create]
   before_action :redirect_if_not_nested_edit, only: [:edit, :update]
 
@@ -11,6 +11,10 @@ class ShipmentsController < ApplicationController
   end
 
   def show
+    respond_to do |format|
+      format.html {render :show}
+      format.json {render json: @shipment}
+    end
   end
 
   def new

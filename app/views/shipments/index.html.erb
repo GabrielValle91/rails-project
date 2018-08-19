@@ -1,20 +1,41 @@
 <h2>Shipments</h2>
-<%= link_to "Create new shipment", new_user_shipment_path(current_user) %>
-<table>
-  <thead>
-    <tr>
-      <td>Shipment ID</td>
-      <td>Reference</td>
-      <td>Pickup Date</td>
-      <td>Delivery Date</td>
-    </tr>
-  </thead>
-    <% @shipments.each do |shipment| %>
+<div><%= link_to "Create new shipment", new_user_shipment_path(current_user) %></div>
+<div id="table-details">
+  <table>
+    <thead>
       <tr>
-        <td><%= link_to "#{shipment.id}", user_shipment_path(current_user, shipment) %></td>
-        <td><%= shipment.reference %></td>
-        <td><%= shipping_date(shipment) %></td>
-        <td><%= delivery_date(shipment) %></td>
+        <td>Shipment ID</td>
+        <td>Reference</td>
+        <td>Pickup Date</td>
+        <td>Delivery Date</td>
       </tr>
-    <% end %>
-</table>
+    </thead>
+      <% @shipments.each do |shipment| %>
+        <tr>
+          <td><%= link_to "#{shipment.id}", user_shipment_path(current_user, shipment) %></td>
+          <td><%= shipment.reference %></td>
+          <td><%= shipping_date(shipment) %></td>
+          <td><%= delivery_date(shipment) %></td>
+          <td><button class="shipment-more-details" data-id="<%= shipment.id %>">Show Details</button></td>
+        </tr>
+      <% end %>
+  </table>
+</div>
+<div id="shipment-details">
+  <p id="shipment-id"></p>
+  <p id="client-name"></p>
+  <p id="shipment-reference"></p>
+  <p id="shipment-status"></p>
+  <br>
+  <p id="shipment-pickup-date"></p>
+  <p id="shipment-pickup-company"></p>
+  <p id="shipment-pickup-address"></p>
+  <p id="shipment-pickup-city"></p>
+  <p id="shipment-pickup-driver"></p>
+  <br>
+  <p id="shipment-delivery-date"></p>
+  <p id="shipment-delivery-company"></p>
+  <p id="shipment-delivery-address"></p>
+  <p id="shipment-delivery-city"></p>
+  <p id="shipment-delivery-driver"></p>
+</div>
