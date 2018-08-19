@@ -8,6 +8,8 @@ class Shipment < ApplicationRecord
   belongs_to :user
   belongs_to :client
 
+  scope :today_shipments, -> { where('pickup_date = ? Or delivery_date = ?', Date.today, Date.today)}
+
   def client_name=(name)
     self.client = Client.find_by(name: name, user_id: self.user_id)
   end
