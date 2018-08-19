@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :dispatches
   root 'application#homepage'
 
   resources :locations, except: [:delete]
@@ -25,6 +26,8 @@ Rails.application.routes.draw do
     resources :drivers, except: [:delete]
     resources :locations, except: [:delete]
   end
+
+  resources :dispatch, only: [:index]
 
   get '/signin', to: 'sessions#new'
   post '/signin', to: 'sessions#create'
