@@ -18,6 +18,8 @@ gem 'omniauth-github'
 gem 'dotenv-rails'
 gem 'pry'
 gem 'bootsnap', '>= 1.1.0', require: false
+gem 'jquery-rails'
+gem 'active_model_serializers'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
