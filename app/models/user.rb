@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :shipments
   has_many :drivers
   has_many :locations
+  has_many :shipment_details, through: :shipments
 
   scope :active_users, -> {joins(:shipments).group(:user_id).order('COUNT(user_id) DESC').having('COUNT(user_id) >= 5')}
 
