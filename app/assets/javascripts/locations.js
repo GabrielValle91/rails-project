@@ -30,8 +30,9 @@ function locationShow (id, max){
       let locationDetails = locationData["city"] + ", " + locationData["state"] + " " + locationData["zip_code"];
       $("#address-city-state-zip").html(locationDetails);
       $("#location-id").html(id);
+      $(".edit-location").attr("href", "/locations/" + id + "/edit");
     })
     .fail(function (){
-      locationShow(id);
+      locationShow(id, max);
     });
 }

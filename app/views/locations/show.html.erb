@@ -1,8 +1,8 @@
 <h2>Location Details</h2>
-<a href="#" class="next-location" data-id="<%= @location.id %>" data-max="<%= Location.last.id %>">Next location </a>
+<a href="#" class="next-location" data-max="<%= Location.last.id %>">Next location </a>
 <p>Location Id: <span id="location-id"><%= @location.id %></span></p>
 <p>Company Name: <span id="company-name"><%= @location.company_name %></span></p>
 <p>Address1: <span id="address-1"><%= @location.address1 %></span></p>
 <p>Address2: <span id="address-2"><%= @location.address2 %></span></p>
 <p>City/State/Zip: <span id="address-city-state-zip"><%= @location.city %>, <%= @location.state %> <%= @location.zip_code %></span></p>
-<%= link_to "Edit this location", edit_user_location_path(current_user, @location) %>
+<%= link_to "Edit this location", edit_user_location_path(current_user, @location) , {:class => "edit-location"}%>
