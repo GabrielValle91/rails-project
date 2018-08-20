@@ -13,7 +13,7 @@
     <tbody>
       <% @drivers.each do |driver| %>
         <tr>
-          <td><%= driver.name %></td>
+          <td id="<%= driver.id %>"><%= driver.name %></td>
         </tr>
       <% end %>
     </tbody>

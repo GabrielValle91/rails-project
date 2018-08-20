@@ -30,40 +30,48 @@ function populateUnassignedList(){
   });
 }
 
-function populateAssignedList(){
+function populateAssignedList(driver){
   $("#assigned-shipment-list").empty();
   let dateFilter = getDashedDate($("#date-filter-value").val());
   $.get("/dispatch/assignedshipments/" + dateFilter, function (shipmentData){
-    shipmentData.forEach(function(shipment){
-      let newRow = "<tr><td>" + shipment.id + "</td><td>" + shipment.client.name + "</td></tr>"
-      $("#assigned-shipment-list").append(newRow);
-    });
+    if (!driver) {
+      shipmentData.forEach(function(shipment){
+        let newRow = "<tr><td>" + shipment.id + "</td><td>" + shipment.client.name + "</td></tr>"
+        $("#assigned-shipment-list").append(newRow);
+      });
+    } else {
+      shipmentData.forEach(function(shipment){
+        if (shipment["shipment_details"][0]["driver_id"] == driver || shipment["shipment_details"][1]["driver_id"] == driver){
+          let newRow = "<tr><td>" + shipment.id + "</td><td>" + shipment.client.name + "</td></tr>"
+          $("#assigned-shipment-list").append(newRow);
+        }
+      });
+    }
   });
 }
 
 function refreshShipmentLists(){
   populateUnassignedList();
-  populateAssignedList();
+  populateAssignedList(0);
+  $('#drivers tbody tr td').removeClass("selected-driver");
 }
 
 function dateFilterListener(){
   $("#date-filter").on('click', () => refreshShipmentLists());
 }
 
-function addRowClass(){
-  $(this).attr("class", "row")
-}
-
-function rowListeners(){
+function driverRowListeners(){
   $('#drivers tbody tr td').on('click', function(){
     $('#drivers tbody tr td').removeClass("selected-driver");
     $(this).toggleClass('selected-driver');
+    let driverId = $(this).attr("id");
+    populateAssignedList(driverId);
   });
 }
 
 function addListeners(){
   dateFilterListener();
-  rowListeners();
+  driverRowListeners();
 }
 
 $(function (){
