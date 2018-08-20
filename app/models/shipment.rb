@@ -15,7 +15,7 @@ class Shipment < ApplicationRecord
   def self.assigned_shipments(date)
     #raise self.inspect
     shipments = self.all.map do |shipment|
-      if shipment.pickup_date.strftime("%m/%d/%Y") == date || shipment.delivery_date.strftime("%m/%d/%Y") == date
+      if (shipment.pickup_date.strftime("%m/%d/%Y") == date || shipment.delivery_date.strftime("%m/%d/%Y") == date) && (shipment.shipment_details.first.driver_id || shipment.shipment_details.last.driver_id)
         shipment
       end
     end.compact
