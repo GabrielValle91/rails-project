@@ -25,8 +25,53 @@ function highlightUnassignedShipments(id){
   $("#USId-" + id).toggleClass('selected-shipment');
 }
 
+function populateUnassignedDetails(id){
+  $("#unassigned-shipment-reference").empty();
+  $("#unassigned-shipment-pickup-company").empty();
+  $("#unassigned-shipment-pickup-address").empty();
+  $("#unassigned-shipment-pickup-city").empty();
+  $("#unassigned-shipment-pickup-driver").empty();
+  $("#unassigned-shipment-delivery-company").empty();
+  $("#unassigned-shipment-delivery-address").empty();
+  $("#unassigned-shipment-delivery-city").empty();
+  $("#unassigned-shipment-delivery-driver").empty();
+  $.get("/shipments/" + id + ".json", function (shipmentData){
+    $("#unassigned-shipment-reference").html("Reference: " + shipmentData["reference"]);
+    $("#unassigned-shipment-status").html("Status: " + shipmentData["status"]);
+    let shipperId = shipmentData["shipment_details"][0]["location_id"];
+    let consigneeId = shipmentData["shipment_details"][1]["location_id"];
+    let pickupDriverId = shipmentData["shipment_details"][0]["driver_id"];
+    let deliveryDriverId = shipmentData["shipment_details"][1]["driver_id"];
+    if (shipperId){
+      $.get("/locations/" + shipperId + ".json", function(locationData) {
+        $("#unassigned-shipment-pickup-company").html("Shipper: " + locationData["company_name"]);
+        $("#unassigned-shipment-pickup-address").html("Address: " + locationData["address1"] + " " + locationData["address2"]);
+        $("#unassigned-shipment-pickup-city").html("City: " + locationData["city"] + ", " + locationData["state"] + " " + locationData["zip_code"]);
+      });
+    }
+    if (pickupDriverId){
+      $.get("/drivers/" + pickupDriverId + ".json", function(driverData){
+        $("#unassigned-shipment-pickup-driver").html("Pickup Driver: " + driverData["name"]);
+      });
+    }
+    if (consigneeId){
+      $.get("/locations/" + consigneeId + ".json", function(locationData){
+        $("#unassigned-shipment-delivery-company").html("Consignee: " + locationData["company_name"]);
+        $("#unassigned-shipment-delivery-address").html("Address: " + locationData["address1"] + " " + locationData["address2"]);
+        $("#unassigned-shipment-delivery-city").html("City: " + locationData["city"] + ", " + locationData["state"] + " " + locationData["zip_code"]);
+      });
+    }
+    if (deliveryDriverId){
+      $.get("/drivers/" + deliveryDriverId + ".json", function(driverData){
+        $("#unassigned-shipment-delivery-driver").html("Delivery Driver: " + driverData["name"]);
+      });
+    }
+  });
+}
+
 function unassignedShipmentListener(id){
-  highlightUnassignedShipments(id)
+  highlightUnassignedShipments(id);
+  populateUnassignedDetails(id);
 }
 
 function highlightAssignedShipments(id){
