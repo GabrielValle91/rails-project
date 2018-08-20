@@ -49,7 +49,7 @@
         <td>Delivery Date</td>
       </tr>
     </thead>
-    <tbody>
+    <tbody id="unassigned-shipment-list">
       <% @unassigned_shipments.each do |shipment| %>
         <tr>
           <td><%= shipment.id %></td>
