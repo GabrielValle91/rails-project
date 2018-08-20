@@ -41,14 +41,32 @@ function populateAssignedList(){
   });
 }
 
+function refreshShipmentLists(){
+  populateUnassignedList();
+  populateAssignedList();
+}
+
 function dateFilterListener(){
-  $("#date-filter").on('click', function(){
-    populateAssignedList();
-  })
+  $("#date-filter").on('click', () => refreshShipmentLists());
+}
+
+function addRowClass(){
+  $(this).attr("class", "row")
+}
+
+function rowListeners(){
+  $('#drivers tbody tr td').on('click', function(){
+    $('#drivers tbody tr td').removeClass("selected-driver");
+    $(this).toggleClass('selected-driver');
+  });
+}
+
+function addListeners(){
+  dateFilterListener();
+  rowListeners();
 }
 
 $(function (){
-  populateUnassignedList();
-  populateAssignedList();
-  dateFilterListener();
+  refreshShipmentLists();
+  addListeners();
 })
