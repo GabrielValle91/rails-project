@@ -21,7 +21,6 @@ class ShipmentsController < ApplicationController
   end
 
   def create
-    raise params.inspect
     if !find_client || find_client.user != current_user
       flash[:notice] = ["","something went wrong, try again"]
       redirect_to new_user_shipment_path(current_user)
@@ -31,7 +30,10 @@ class ShipmentsController < ApplicationController
     @shipment.user = current_user
     if @shipment.save
       @shipment.update(shipment_params)
-      redirect_to user_shipments_path(@shipment.user)
+      respond_to do |format|
+        format.html {redirect_to user_shipments_path(@shipment.user)}
+        format.json { render "/shipments/#{@shipment/id}.json"}
+      end
     else
       flash[:notice] = @shipment.errors.full_messages
       redirect_to new_shipment_path

@@ -173,28 +173,34 @@ function driverRowListeners(){
 function shipmentSubmit(){
   $("#new_shipment").on('submit', function(e) {
     e.preventDefault();
-    let shipmentData = {};
-    shipmentData["client_id"] = $("#shipment_client_id").val();
-    shipmentData["reference"] = $("#shipment_reference").val();
-    shipmentData["pickup_date"] = $("#shipment_pickup_date").val();
-    shipmentData["delivery_date"] = $("#shipment_delivery_date").val();
-    shipmentData["location_shipper"] = {};
-    shipmentData["location_shipper"]["id"] = $("#shipment_location_shipper_id").val();
-    shipmentData["location_shipper"]["company_name"] = $("#shipment_location_shipper_company_name").val();
-    shipmentData["location_shipper"]["address1"] = $("#shipment_location_shipper_address1").val();
-    shipmentData["location_shipper"]["address2"] = $("#shipment_location_shipper_address2").val();
-    shipmentData["location_shipper"]["city"] = $("#shipment_location_shipper_city").val();
-    shipmentData["location_shipper"]["state"] = $("#shipment_location_shipper_state").val();
-    shipmentData["location_shipper"]["zip_code"] = $("#shipment_location_shipper_zip_code").val();
-    shipmentData["location_consignee"] = {};
-    shipmentData["location_consignee"]["id"] = $("#shipment_location_consignee_id").val();
-    shipmentData["location_consignee"]["company_name"] = $("#shipment_location_consignee_company_name").val();
-    shipmentData["location_consignee"]["address1"] = $("#shipment_location_consignee_address1").val();
-    shipmentData["location_consignee"]["address2"] = $("#shipment_location_consignee_address2").val();
-    shipmentData["location_consignee"]["city"] = $("#shipment_location_consignee_city").val();
-    shipmentData["location_consignee"]["state"] = $("#shipment_location_consignee_state").val();
-    shipmentData["location_consignee"]["zip_code"] = $("#shipment_location_consignee_zip_code").val();
-    let url = this.action;
+    let shipmentData = {
+      'authenticity_token': $("input[name='authenticity_token']").val(),
+      'shipment': {
+        'client_data': $("#shipment_client_id").val(),
+        'reference': $("#shipment_reference").val(),
+        'pickup_date': $("#shipment_pickup_date").val(),
+        'delivery_date': $("#shipment_delivery_date").val(),
+        'location_shipper': {
+          'id': $("#shipment_location_shipper_id").val(),
+          'company_name': $("#shipment_location_shipper_company_name").val(),
+          'address1': $("#shipment_location_shipper_address1").val(),
+          'address2': $("#shipment_location_shipper_address2").val(),
+          'city': $("#shipment_location_shipper_city").val(),
+          'state': $("#shipment_location_shipper_state").val(),
+          'zip_code': $("#shipment_location_shipper_zip_code").val()
+        }
+        'location_consignee': {
+          'id': $("#shipment_location_consigne_id").val(),
+          'company_name': $("#shipment_location_consigne_company_name").val(),
+          'address1': $("#shipment_location_consigne_address1").val(),
+          'address2': $("#shipment_location_consigne_address2").val(),
+          'city': $("#shipment_location_consigne_city").val(),
+          'state': $("#shipment_location_consigne_state").val(),
+          'zip_code': $("#shipment_location_consigne_zip_code").val()
+        }
+      }
+    };
+    let url = this.action + ".json";
     $.post(url, shipmentData, function(){
 
     })
