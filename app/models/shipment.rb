@@ -12,6 +12,16 @@ class Shipment < ApplicationRecord
 
   scope :unassigned_shipments, -> { joins(:shipment_details).where('shipment_details.driver_id is null')}
 
+  def self.assigned_shipments(date)
+    #raise self.inspect
+    shipments = self.all.map do |shipment|
+      if shipment.pickup_date.strftime("%m/%d/%Y") == date || shipment.delivery_date.strftime("%m/%d/%Y") == date
+        shipment
+      end
+    end.compact
+    return shipments
+  end
+
   def client_name=(name)
     self.client = Client.find_by(name: name, user_id: self.user_id)
   end

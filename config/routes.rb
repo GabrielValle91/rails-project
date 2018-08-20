@@ -33,4 +33,5 @@ Rails.application.routes.draw do
   post '/signin', to: 'sessions#create'
   get '/logout', to: 'sessions#logout'
   get '/auth/:provider/callback', to: 'sessions#create'
+  get '/dispatch/assignedshipments', to: 'dispatch#assignedshipments'
 end
