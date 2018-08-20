@@ -15,10 +15,22 @@ function populateUnassignedList(){
     shipmentData.forEach(function(shipment){
       let newRow = "<tr><td>" + shipment.id + "</td><td>" + shipment.client.name + "</td><td>" + getFormattedDate(shipment.pickup_date) + "</td><td>" + getFormattedDate(shipment.delivery_date) + "</td></tr>"
       $("#unassigned-shipment-list").append(newRow);
-    })
-  })
+    });
+  });
+}
+
+function populateAssignedList(){
+  $("#assigned-shipment-list").empty();
+  let dateFilter = $("#date-filter-value").val();
+  $.get("/dispatch/assignedshipments/" + dateFilter, function (shipmentData){
+    shipmentData.forEach(function(shipment){
+      let newRow = "<tr><td>" + shipment.id + "</td><td>" + shipment.client.name + "</td></tr>"
+      $("#assigned-shipment-list").append(newRow);
+    });
+  });
 }
 
 $(function (){
   populateUnassignedList();
+  populateAssignedList();
 })
