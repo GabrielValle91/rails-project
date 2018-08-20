@@ -1,11 +1,15 @@
 #filter-date{
   width: 100%;
   text-align: center;
+  border: 1px solid black;
+  max-height: 500px;
 }
 
 #driver-list{
   width: 15%;
   float: left;
+  border: 1px solid black;
+  max-height: 500px;
 }
 
 .selected-driver {
@@ -19,14 +23,20 @@
 #assigned-shipments{
   width: 20%;
   float: left;
+  border: 1px solid black;
+  max-height: 500px;
 }
 
 #unassigned-shipments{
   width: 45%;
   float: left;
+  border: 1px solid black;
+  max-height: 500px;
 }
 
 #new-shipment{
   width: 45%;
   float: left;
+  border: 1px solid black;
+  max-height: 500px;
 }

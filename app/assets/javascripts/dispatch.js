@@ -20,6 +20,11 @@ function getDashedDate(date){
   return month + '-' + day + '-' + year;
 }
 
+function unassignedShipmentListener(id){
+  $('#unassigned-shipment-list tr').removeClass("selected-shipment");
+  $("#USId-" + id).toggleClass('selected-shipment');
+}
+
 function assignedShipmentListener(id){
   $('#assigned-shipment-list tr').removeClass("selected-shipment");
   $("#ASId-" + id).toggleClass('selected-shipment');
@@ -29,8 +34,9 @@ function populateUnassignedList(){
   $("#unassigned-shipment-list").empty();
   $.get("/dispatch/unassignedshipments", function (shipmentData){
     shipmentData.forEach(function(shipment){
-      let newRow = "<tr><td>" + shipment.id + "</td><td>" + shipment.client.name + "</td><td>" + getFormattedDate(shipment.pickup_date) + "</td><td>" + getFormattedDate(shipment.delivery_date) + "</td></tr>"
+      let newRow = `<tr id="USId-${shipment.id}"><td>${shipment.id}</td><td>${shipment.client.name}</td><td>${getFormattedDate(shipment.pickup_date)}</td><td>${getFormattedDate(shipment.delivery_date)}</td></tr>`
       $("#unassigned-shipment-list").append(newRow);
+      $("#USId-" + shipment.id).on('click', () => unassignedShipmentListener(shipment.id));
     });
   });
 }
