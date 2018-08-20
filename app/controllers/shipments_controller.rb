@@ -21,6 +21,7 @@ class ShipmentsController < ApplicationController
   end
 
   def create
+    raise params.inspect
     if !find_client || find_client.user != current_user
       flash[:notice] = ["","something went wrong, try again"]
       redirect_to new_user_shipment_path(current_user)

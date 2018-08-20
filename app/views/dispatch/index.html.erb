@@ -50,11 +50,6 @@
 </div>
 <div id="new-shipment">
   <%= form_for [current_user, @shipment] do |f| %>
-    <% if flash[:notice] %>
-      <% flash[:notice].each do |msg| %>
-        <%= msg %><br>
-      <% end %>
-    <% end %>
     <%= f.label :client_id %>
     <%= f.collection_select :client_id, current_user.clients.active, :id, :name, prompt: "Select a client" %>
     <br>
