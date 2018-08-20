@@ -26,15 +26,7 @@ function highlightUnassignedShipments(id){
 }
 
 function populateUnassignedDetails(id){
-  $("#unassigned-shipment-reference").empty();
-  $("#unassigned-shipment-pickup-company").empty();
-  $("#unassigned-shipment-pickup-address").empty();
-  $("#unassigned-shipment-pickup-city").empty();
-  $("#unassigned-shipment-pickup-driver").empty();
-  $("#unassigned-shipment-delivery-company").empty();
-  $("#unassigned-shipment-delivery-address").empty();
-  $("#unassigned-shipment-delivery-city").empty();
-  $("#unassigned-shipment-delivery-driver").empty();
+  $("#unassigned-shipment-details p").empty();
   $.get("/shipments/" + id + ".json", function (shipmentData){
     $("#unassigned-shipment-reference").html("Reference: " + shipmentData["reference"]);
     $("#unassigned-shipment-status").html("Status: " + shipmentData["status"]);
@@ -80,17 +72,7 @@ function highlightAssignedShipments(id){
 }
 
 function populateAssignedDetails(id){
-  $("#assigned-shipment-reference").empty();
-  $("#assigned-shipment-pickup-date").empty();
-  $("#assigned-shipment-delivery-date").empty();
-  $("#assigned-shipment-pickup-company").empty();
-  $("#assigned-shipment-pickup-address").empty();
-  $("#assigned-shipment-pickup-city").empty();
-  $("#assigned-shipment-pickup-driver").empty();
-  $("#assigned-shipment-delivery-company").empty();
-  $("#assigned-shipment-delivery-address").empty();
-  $("#assigned-shipment-delivery-city").empty();
-  $("#assigned-shipment-delivery-driver").empty();
+  $("#assigned-shipment-details p").empty();
   $.get("/shipments/" + id + ".json", function (shipmentData){
     $("#assigned-shipment-id").html("Shipment Id: " + shipmentData["id"]);
     $("#assigned-client-name").html("Client: " + shipmentData["client"]["name"]);
@@ -171,6 +153,8 @@ function refreshShipmentLists(){
   populateUnassignedList();
   populateAssignedList(0);
   $('#drivers tbody tr td').removeClass("selected-driver");
+  $("#assigned-shipment-details p").empty();
+  $("#unassigned-shipment-details p").empty();
 }
 
 function dateFilterListener(){
