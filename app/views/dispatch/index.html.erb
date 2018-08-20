@@ -23,7 +23,7 @@
   <table>
     <thead>
       <tr>
-        <td>Shipment Id</td>
+        <td>Id</td>
         <td>Client Name</td>
       </tr>
     </thead>
@@ -42,8 +42,10 @@
   <table>
     <thead>
       <tr>
-        <td>Shipment Id</td>
+        <td>Id</td>
         <td>Client Name</td>
+        <td>Pickup Date</td>
+        <td>Delivery Date</td>
       </tr>
     </thead>
     <tbody>
@@ -51,6 +53,8 @@
         <tr>
           <td><%= shipment.id %></td>
           <td><%= shipment.client.name %></td>
+          <td><%= shipping_date(shipment) %></td>
+          <td><%= delivery_date(shipment) %></td>
         </tr>
       <% end %>
     </tbody>
