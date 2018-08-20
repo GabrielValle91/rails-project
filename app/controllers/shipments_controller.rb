@@ -32,7 +32,7 @@ class ShipmentsController < ApplicationController
       @shipment.update(shipment_params)
       respond_to do |format|
         format.html {redirect_to user_shipments_path(@shipment.user)}
-        format.json { render "/shipments/#{@shipment/id}.json"}
+        format.json { render json: @shipment}
       end
     else
       flash[:notice] = @shipment.errors.full_messages

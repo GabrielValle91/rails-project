@@ -176,7 +176,7 @@ function shipmentSubmit(){
     let shipmentData = {
       'authenticity_token': $("input[name='authenticity_token']").val(),
       'shipment': {
-        'client_data': $("#shipment_client_id").val(),
+        'client_id': $("#shipment_client_id").val(),
         'reference': $("#shipment_reference").val(),
         'pickup_date': $("#shipment_pickup_date").val(),
         'delivery_date': $("#shipment_delivery_date").val(),
@@ -188,21 +188,23 @@ function shipmentSubmit(){
           'city': $("#shipment_location_shipper_city").val(),
           'state': $("#shipment_location_shipper_state").val(),
           'zip_code': $("#shipment_location_shipper_zip_code").val()
-        }
+        },
         'location_consignee': {
-          'id': $("#shipment_location_consigne_id").val(),
-          'company_name': $("#shipment_location_consigne_company_name").val(),
-          'address1': $("#shipment_location_consigne_address1").val(),
-          'address2': $("#shipment_location_consigne_address2").val(),
-          'city': $("#shipment_location_consigne_city").val(),
-          'state': $("#shipment_location_consigne_state").val(),
-          'zip_code': $("#shipment_location_consigne_zip_code").val()
+          'id': $("#shipment_location_consignee_id").val(),
+          'company_name': $("#shipment_location_consignee_company_name").val(),
+          'address1': $("#shipment_location_consignee_address1").val(),
+          'address2': $("#shipment_location_consignee_address2").val(),
+          'city': $("#shipment_location_consignee_city").val(),
+          'state': $("#shipment_location_consignee_state").val(),
+          'zip_code': $("#shipment_location_consignee_zip_code").val()
         }
       }
     };
     let url = this.action + ".json";
-    $.post(url, shipmentData, function(){
-
+    $.post(url, shipmentData, function(shipment){
+      let newRow = `<tr id="USId-${shipment.id}"><td>${shipment.id}</td><td>${shipment.client.name}</td><td>${getFormattedDate(shipment.pickup_date)}</td><td>${getFormattedDate(shipment.delivery_date)}</td></tr>`
+      $("#unassigned-shipment-list").append(newRow);
+      $("#USId-" + shipment.id).on('click', () => unassignedShipmentListener(shipment.id));
     })
   })
 }
