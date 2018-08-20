@@ -5,7 +5,7 @@ class DispatchController < ApplicationController
   end
 
   def assignedshipments
-    date = Time.strptime("08/19/2018", "%m/%d/%Y")
+    date = Time.strptime(params[:date], "%m-%d-%Y")
     @assigned_shipments = current_user.shipments.assigned_shipments(date.strftime("%m/%d/%Y"))
     render json: @assigned_shipments
   end
