@@ -1,13 +1,11 @@
 #filter-date{
   width: 100%;
   text-align: center;
-  border: 1px solid black;
 }
 
 #driver-list{
   width: 15%;
   float: left;
-  border: 1px solid black;
   height: 400px;
   overflow: auto;
 }
@@ -28,7 +26,6 @@
 #assigned-shipments{
   width: 20%;
   float: left;
-  border: 1px solid black;
   height: 400px;
   overflow: auto;
 }
@@ -41,7 +38,6 @@
 #unassigned-shipments{
   width: 35%;
   float: left;
-  border: 1px solid black;
   height: 400px;
   overflow: auto;
 }
@@ -54,16 +50,13 @@
 #new-shipment{
   width: 30%;
   float: left;
-  border: 1px solid black;
 }
 
 #assigned-shipment-details{
   width: 35%;
   float: left;
-  border: 1px solid black;
 }
 #unassigned-shipment-details{
   width: 35%;
   float: left;
-  border: 1px solid black;
 }
