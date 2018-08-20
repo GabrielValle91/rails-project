@@ -49,7 +49,10 @@
   </table>
 </div>
 <div id="new-shipment">
+  <%= form_for @shipment do |f| %>
 
+  <%= f.submit %>
+  <% end %>
 </div>
 <div id="assigned-shipment-details">
   <p id="assigned-shipment-reference"></p>

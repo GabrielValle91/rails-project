@@ -2,6 +2,7 @@ class DispatchController < ApplicationController
   before_action :user_auth
   def index
     @drivers = current_user.drivers
+    @shipment = Shipment.new
   end
 
   def assignedshipments
