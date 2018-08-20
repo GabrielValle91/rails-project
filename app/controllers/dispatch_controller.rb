@@ -7,11 +7,14 @@ class DispatchController < ApplicationController
   end
 
   def assignedshipments
-    @assigned_shipments = current_user.shipments.today_shipments
     date = Time.strptime("08/19/2018", "%m/%d/%Y")
-    test = current_user.shipments.assigned_shipments(date.strftime("%m/%d/%Y"))
-    raise test.inspect
+    @assigned_shipments = current_user.shipments.assigned_shipments(date.strftime("%m/%d/%Y"))
     render json: @assigned_shipments
+  end
+
+  def unassignedshipments
+    @unassigned_shipments = current_user.shipments.unassigned_shipments
+    render json: @unassigned_shipments
   end
 
   private

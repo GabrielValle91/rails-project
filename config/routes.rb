@@ -34,4 +34,5 @@ Rails.application.routes.draw do
   get '/logout', to: 'sessions#logout'
   get '/auth/:provider/callback', to: 'sessions#create'
   get '/dispatch/assignedshipments', to: 'dispatch#assignedshipments'
+  get '/dispatch/unassignedshipments', to: 'dispatch#unassignedshipments'
 end
