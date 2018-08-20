@@ -41,7 +41,14 @@ function populateAssignedList(){
   });
 }
 
+function dateFilterListener(){
+  $("#date-filter").on('click', function(){
+    populateAssignedList();
+  })
+}
+
 $(function (){
   populateUnassignedList();
   populateAssignedList();
+  dateFilterListener();
 })
