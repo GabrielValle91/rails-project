@@ -12,6 +12,11 @@
   overflow: auto;
 }
 
+#driver-title{
+  display: inline-block;
+  width: 15%;
+}
+
 .selected-driver {
   background-color: lightblue;
 }
@@ -28,16 +33,26 @@
   overflow: auto;
 }
 
+#A-shipment-title{
+  display: inline-block;
+  width: 20%;
+}
+
 #unassigned-shipments{
-  width: 45%;
+  width: 35%;
   float: left;
   border: 1px solid black;
   height: 500px;
   overflow: auto;
 }
 
+#U-shipment-title{
+  display: inline-block;
+  width: 35%;
+}
+
 #new-shipment{
-  width: 45%;
+  width: 30%;
   float: left;
   border: 1px solid black;
 }
