@@ -10,6 +10,8 @@ class Shipment < ApplicationRecord
 
   scope :today_shipments, -> { where('pickup_date = ? Or delivery_date = ?', Date.today, Date.today)}
 
+  scope :unassigned_shipments, -> { joins(:shipment_details).where('shipment_details.driver_id is null')}
+
   def client_name=(name)
     self.client = Client.find_by(name: name, user_id: self.user_id)
   end

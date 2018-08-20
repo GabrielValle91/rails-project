@@ -2,13 +2,56 @@
 
 </div>
 <div id="driver-list">
-
+  <table>
+    <thead>
+      <tr>
+        <td>Drivers</td>
+      </tr>
+    </thead>
+    <tbody>
+      <% @drivers.each do |driver| %>
+        <tr>
+          <td><%= driver.name %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>
 <div id="assigned-shipments">
-
+  <table>
+    <thead>
+      <tr>
+        <td>Shipment Id</td>
+        <td>Client Name</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <%= @assigned_shipments.each do |shipment| %>
+          <td><%= shipment.id %></td>
+          <td><%= shipment.client.name %></td>
+        <% end %>
+      </tr>
+    </tbody>
+  </table>
 </div>
 <div id="unassigned-shipments">
-
+  <table>
+    <thead>
+      <tr>
+        <td>Shipment Id</td>
+        <td>Client Name</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <%= @unassigned_shipments.each do |shipment| %>
+          <td><%= shipment.id %></td>
+          <td><%= shipment.client.name %></td>
+        <% end %>
+      </tr>
+    </tbody>
+  </table>
 </div>
 <div id="new-shipment">
 

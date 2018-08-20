@@ -10,6 +10,4 @@ class ShipmentDetail < ApplicationRecord
   scope :consignee, -> {joins(:location).where(location_type: "consignee").limit(1).first}
 
   scope :delivery_driver, -> { joins(:driver).where(location_type: "consignee").limit(1).first}
-
-  scope :unassigned_shipments, -> { where(:driver_id => nil)}
 end

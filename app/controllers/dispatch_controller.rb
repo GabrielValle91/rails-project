@@ -2,8 +2,8 @@ class DispatchController < ApplicationController
   before_action :user_auth
   def index
     @drivers = current_user.drivers
-    @shipments = current_user.shipments.today_shipments
-    @unassigned_shipments = current_user.shipment_details.unassigned_shipments
+    @assigned_shipments = current_user.shipments.today_shipments
+    @unassigned_shipments = current_user.shipments.unassigned_shipments
     raise @unassigned_shipments.inspect
   end
 
