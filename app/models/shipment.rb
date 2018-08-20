@@ -13,7 +13,6 @@ class Shipment < ApplicationRecord
   scope :unassigned_shipments, -> { joins(:shipment_details).where('shipment_details.driver_id is null')}
 
   def self.assigned_shipments(date)
-    #raise self.inspect
     shipments = self.all.map do |shipment|
       if (shipment.pickup_date.strftime("%m/%d/%Y") == date || shipment.delivery_date.strftime("%m/%d/%Y") == date) && (shipment.shipment_details.first.driver_id || shipment.shipment_details.last.driver_id)
         shipment

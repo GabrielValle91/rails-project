@@ -8,7 +8,6 @@ class DispatchController < ApplicationController
   def assignedshipments
     date = Time.strptime(params[:date], "%m-%d-%Y")
     @assigned_shipments = current_user.shipments.assigned_shipments(date.strftime("%m/%d/%Y"))
-    #raise @assigned_shipments.inspect
     render json: @assigned_shipments
   end
 
