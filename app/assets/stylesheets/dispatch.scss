@@ -4,7 +4,7 @@
 }
 
 #driver-list{
-  width: 15%;
+  width: 12%;
   float: left;
   height: 400px;
   overflow: auto;
@@ -12,7 +12,7 @@
 
 #driver-title{
   display: inline-block;
-  width: 15%;
+  width: 12%;
 }
 
 .selected-driver {
@@ -24,7 +24,7 @@
 }
 
 #assigned-shipments{
-  width: 20%;
+  width: 18%;
   float: left;
   height: 400px;
   overflow: auto;
@@ -32,11 +32,11 @@
 
 #A-shipment-title{
   display: inline-block;
-  width: 20%;
+  width: 18%;
 }
 
 #unassigned-shipments{
-  width: 35%;
+  width: 30%;
   float: left;
   height: 400px;
   overflow: auto;
@@ -44,19 +44,19 @@
 
 #U-shipment-title{
   display: inline-block;
-  width: 35%;
+  width: 30%;
 }
 
 #new-shipment{
-  width: 30%;
+  width: 40%;
   float: left;
 }
 
 #assigned-shipment-details{
-  width: 35%;
+  width: 30%;
   float: left;
 }
 #unassigned-shipment-details{
-  width: 35%;
+  width: 30%;
   float: left;
 }
