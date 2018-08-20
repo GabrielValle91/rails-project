@@ -26,12 +26,12 @@
       </tr>
     </thead>
     <tbody>
+      <% @assigned_shipments.each do |shipment| %>
       <tr>
-        <%= @assigned_shipments.each do |shipment| %>
           <td><%= shipment.id %></td>
           <td><%= shipment.client.name %></td>
-        <% end %>
       </tr>
+      <% end %>
     </tbody>
   </table>
 </div>
@@ -44,12 +44,12 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <%= @unassigned_shipments.each do |shipment| %>
+      <% @unassigned_shipments.each do |shipment| %>
+        <tr>
           <td><%= shipment.id %></td>
           <td><%= shipment.client.name %></td>
-        <% end %>
-      </tr>
+        </tr>
+      <% end %>
     </tbody>
   </table>
 </div>

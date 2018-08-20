@@ -4,7 +4,6 @@ class DispatchController < ApplicationController
     @drivers = current_user.drivers
     @assigned_shipments = current_user.shipments.today_shipments
     @unassigned_shipments = current_user.shipments.unassigned_shipments
-    raise @unassigned_shipments.inspect
   end
 
   private
