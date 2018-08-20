@@ -20,8 +20,9 @@ function getDashedDate(date){
   return month + '-' + day + '-' + year;
 }
 
-function assignedShipmentListener(){
-  alert("hi");
+function assignedShipmentListener(id){
+  $('#assigned-shipment-list tr').removeClass("selected-shipment");
+  $("#ASId-" + id).toggleClass('selected-shipment');
 }
 
 function populateUnassignedList(){
@@ -40,16 +41,16 @@ function populateAssignedList(driver){
   $.get("/dispatch/assignedshipments/" + dateFilter, function (shipmentData){
     if (!driver) {
       shipmentData.forEach(function(shipment){
-        let newRow = "<tr><td>" + shipment.id + "</td><td>" + shipment.client.name + "</td></tr>"
+        let newRow = `<tr id="ASId-${shipment.id}"><td>${shipment.id}</td><td>${shipment.client.name}</td></tr>`
         $("#assigned-shipment-list").append(newRow);
-        $("#A-shipments tbody tr").on('click', () => assignedShipmentListener());
+        $("#ASId-" + shipment.id).on('click', () => assignedShipmentListener(shipment.id));
       });
     } else {
       shipmentData.forEach(function(shipment){
         if (shipment["shipment_details"][0]["driver_id"] == driver || shipment["shipment_details"][1]["driver_id"] == driver){
-          let newRow = "<tr><td>" + shipment.id + "</td><td>" + shipment.client.name + "</td></tr>"
+          let newRow = `<tr id="ASId-${shipment.id}"><td>${shipment.id}</td><td>${shipment.client.name}</td></tr>`
           $("#assigned-shipment-list").append(newRow);
-          $("#A-shipments tbody tr").on('click', () => assignedShipmentListener());
+          $("#ASId-" + shipment.id).on('click', () => assignedShipmentListener(shipment.id));
         }
       });
     }
