@@ -1,7 +1,3 @@
-$(function (){
-  populateUnassignedList();
-})
-
 function getFormattedDate(date) {
   var d = new Date(date);
   var year = d.getFullYear();
@@ -22,3 +18,7 @@ function populateUnassignedList(){
     })
   })
 }
+
+$(function (){
+  populateUnassignedList();
+})
