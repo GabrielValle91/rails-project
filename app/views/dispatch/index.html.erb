@@ -50,14 +50,6 @@
       </tr>
     </thead>
     <tbody id="unassigned-shipment-list">
-      <% @unassigned_shipments.each do |shipment| %>
-        <tr>
-          <td><%= shipment.id %></td>
-          <td><%= shipment.client.name %></td>
-          <td><%= shipping_date(shipment) %></td>
-          <td><%= delivery_date(shipment) %></td>
-        </tr>
-      <% end %>
     </tbody>
   </table>
 </div>

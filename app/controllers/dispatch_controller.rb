@@ -3,7 +3,6 @@ class DispatchController < ApplicationController
   def index
     @drivers = current_user.drivers
     @assigned_shipments = current_user.shipments.today_shipments
-    @unassigned_shipments = current_user.shipments.unassigned_shipments
   end
 
   def assignedshipments
