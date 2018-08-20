@@ -1,5 +1,5 @@
 <div id="filter-date">
-  <input type="date" value="<%= Date.today %>"></input>
+  <input id="date-filter-value" type="date" value="<%= Date.today %>"></input>
   <button id="date-filter">Refresh</button>
 </div>
 <div id="driver-list">
@@ -29,12 +29,6 @@
       </tr>
     </thead>
     <tbody id="assigned-shipment-list">
-      <% @assigned_shipments.each do |shipment| %>
-      <tr>
-          <td><%= shipment.id %></td>
-          <td><%= shipment.client.name %></td>
-      </tr>
-      <% end %>
     </tbody>
   </table>
 </div>
