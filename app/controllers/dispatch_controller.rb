@@ -12,7 +12,7 @@ class DispatchController < ApplicationController
   end
 
   def unassignedshipments
-    @unassigned_shipments = current_user.shipments.unassigned_shipments
+    @unassigned_shipments = current_user.shipments.unassigned_shipments.distinct
     render json: @unassigned_shipments
   end
 
