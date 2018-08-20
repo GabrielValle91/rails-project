@@ -20,14 +20,73 @@ function getDashedDate(date){
   return month + '-' + day + '-' + year;
 }
 
-function unassignedShipmentListener(id){
+function highlightUnassignedShipments(id){
   $('#unassigned-shipment-list tr').removeClass("selected-shipment");
   $("#USId-" + id).toggleClass('selected-shipment');
 }
 
-function assignedShipmentListener(id){
+function unassignedShipmentListener(id){
+  highlightUnassignedShipments(id)
+}
+
+function highlightAssignedShipments(id){
   $('#assigned-shipment-list tr').removeClass("selected-shipment");
   $("#ASId-" + id).toggleClass('selected-shipment');
+}
+
+function populateAssignedDetails(id){
+  $("#assigned-shipment-reference").empty();
+  $("#assigned-shipment-pickup-date").empty();
+  $("#assigned-shipment-delivery-date").empty();
+  $("#assigned-shipment-pickup-company").empty();
+  $("#assigned-shipment-pickup-address").empty();
+  $("#assigned-shipment-pickup-city").empty();
+  $("#assigned-shipment-pickup-driver").empty();
+  $("#assigned-shipment-delivery-company").empty();
+  $("#assigned-shipment-delivery-address").empty();
+  $("#assigned-shipment-delivery-city").empty();
+  $("#assigned-shipment-delivery-driver").empty();
+  $.get("/shipments/" + id + ".json", function (shipmentData){
+    $("#assigned-shipment-id").html("Shipment Id: " + shipmentData["id"]);
+    $("#assigned-client-name").html("Client: " + shipmentData["client"]["name"]);
+    $("#assigned-shipment-reference").html("Reference: " + shipmentData["reference"]);
+    $("#assigned-shipment-pickup-date").html("Pickup Date: " + shipmentData["pickup_date"]);
+    $("#assigned-shipment-delivery-date").html("Delivery Date: " + shipmentData["delivery_date"]);
+    $("#assigned-shipment-status").html("Status: " + shipmentData["status"]);
+    let shipperId = shipmentData["shipment_details"][0]["location_id"];
+    let consigneeId = shipmentData["shipment_details"][1]["location_id"];
+    let pickupDriverId = shipmentData["shipment_details"][0]["driver_id"];
+    let deliveryDriverId = shipmentData["shipment_details"][1]["driver_id"];
+    if (shipperId){
+      $.get("/locations/" + shipperId + ".json", function(locationData) {
+        $("#assigned-shipment-pickup-company").html("Shipper: " + locationData["company_name"]);
+        $("#assigned-shipment-pickup-address").html("Address: " + locationData["address1"] + " " + locationData["address2"]);
+        $("#assigned-shipment-pickup-city").html("City: " + locationData["city"] + ", " + locationData["state"] + " " + locationData["zip_code"]);
+      });
+    }
+    if (pickupDriverId){
+      $.get("/drivers/" + pickupDriverId + ".json", function(driverData){
+        $("#assigned-shipment-pickup-driver").html("Pickup Driver: " + driverData["name"]);
+      });
+    }
+    if (consigneeId){
+      $.get("/locations/" + consigneeId + ".json", function(locationData){
+        $("#assigned-shipment-delivery-company").html("Consignee: " + locationData["company_name"]);
+        $("#assigned-shipment-delivery-address").html("Address: " + locationData["address1"] + " " + locationData["address2"]);
+        $("#assigned-shipment-delivery-city").html("City: " + locationData["city"] + ", " + locationData["state"] + " " + locationData["zip_code"]);
+      });
+    }
+    if (deliveryDriverId){
+      $.get("/drivers/" + deliveryDriverId + ".json", function(driverData){
+        $("#assigned-shipment-delivery-driver").html("Delivery Driver: " + driverData["name"]);
+      });
+    }
+  });
+}
+
+function assignedShipmentListener(id){
+  highlightAssignedShipments(id);
+  populateAssignedDetails(id);
 }
 
 function populateUnassignedList(){
