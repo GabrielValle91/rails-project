@@ -106,14 +106,14 @@ function populateAssignedList(driver){
   $.get("/dispatch/assignedshipments/" + dateFilter, function (shipmentData){
     if (!driver) {
       shipmentData.forEach(function(shipment){
-        let newRow = `<tr id="ASId-${shipment.id}"><td>${shipment.id}</td><td>${shipment.client.name}</td></tr>`
+        let newRow = `<tr id="ASId-${shipment.id}"><td>${shipment.id}</td><td>${shipment.client.name}</td><td>${shipment.status}</td></tr>`
         $("#assigned-shipment-list").append(newRow);
         $("#ASId-" + shipment.id).on('click', () => assignedShipmentListener(shipment.id));
       });
     } else {
       shipmentData.forEach(function(shipment){
         if (shipment["shipment_details"][0]["driver_id"] == driver || shipment["shipment_details"][1]["driver_id"] == driver){
-          let newRow = `<tr id="ASId-${shipment.id}"><td>${shipment.id}</td><td>${shipment.client.name}</td></tr>`
+          let newRow = `<tr id="ASId-${shipment.id}"><td>${shipment.id}</td><td>${shipment.client.name}</td><td>${shipment.status}</td></tr>`
           $("#assigned-shipment-list").append(newRow);
           $("#ASId-" + shipment.id).on('click', () => assignedShipmentListener(shipment.id));
         }
