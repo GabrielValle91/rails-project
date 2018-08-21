@@ -4,10 +4,13 @@ class DriversController < ApplicationController
   before_action :correct_user, only: [:show, :edit, :update]
   before_action :redirect_if_not_nested_new, only: [:new, :create]
   before_action :redirect_if_not_nested_edit, only: [:edit, :update]
-  before_action :redirect_if_not_nested_show, only: [:index]
 
   def index
     @drivers = current_user.drivers
+    respond_to do |format|
+      format.html {render :index}
+      format.json {render json: @drivers}
+    end
   end
 
   def show

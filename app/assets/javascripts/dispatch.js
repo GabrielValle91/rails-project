@@ -116,15 +116,39 @@ function assignedShipmentListener(id){
   populateAssignedDetails(id);
 }
 
+function UnassignedShipment(id, client_name, pickup_date, delivery_date){
+  this.id = id;
+  this.clientName = client_name;
+  this.pickupDate = pickup_date;
+  this.deliveryDate = delivery_date;
+}
+
+UnassignedShipment.prototype.displayDetails = function(){
+  let newRow = `<tr id="USId-${this.id}"><td>${this.id}</td><td>${this.clientName}</td><td>${getFormattedDate(this.pickupDate)}</td><td>${getFormattedDate(this.deliveryDate)}</td></tr>`
+  $("#unassigned-shipment-list").append(newRow);
+  $("#USId-" + this.id).on('click', () => unassignedShipmentListener(this.id));
+}
+
 function populateUnassignedList(){
   $("#unassigned-shipment-list").empty();
   $.get("/dispatch/unassignedshipments", function (shipmentData){
     shipmentData.forEach(function(shipment){
-      let newRow = `<tr id="USId-${shipment.id}"><td>${shipment.id}</td><td>${shipment.client.name}</td><td>${getFormattedDate(shipment.pickup_date)}</td><td>${getFormattedDate(shipment.delivery_date)}</td></tr>`
-      $("#unassigned-shipment-list").append(newRow);
-      $("#USId-" + shipment.id).on('click', () => unassignedShipmentListener(shipment.id));
+      let newShipment = new UnassignedShipment(shipment.id, shipment.client.name, shipment.pickup_date, shipment.delivery_date);
+      newShipment.displayDetails();
     });
   });
+}
+
+function AssignedShipment(id, client_name, status){
+  this.id = id;
+  this.clientName = client_name;
+  this.status = status;
+}
+
+AssignedShipment.prototype.displayDetails = function(){
+  let newRow = `<tr id="ASId-${this.id}"><td>${this.id}</td><td>${this.clientName}</td><td>${this.status}</td></tr>`
+  $("#assigned-shipment-list").append(newRow);
+  $("#ASId-" + this.id).on('click', () => assignedShipmentListener(this.id));
 }
 
 function populateAssignedList(driver){
@@ -133,16 +157,14 @@ function populateAssignedList(driver){
   $.get("/dispatch/assignedshipments/" + dateFilter, function (shipmentData){
     if (!driver) {
       shipmentData.forEach(function(shipment){
-        let newRow = `<tr id="ASId-${shipment.id}"><td>${shipment.id}</td><td>${shipment.client.name}</td><td>${shipment.status}</td></tr>`
-        $("#assigned-shipment-list").append(newRow);
-        $("#ASId-" + shipment.id).on('click', () => assignedShipmentListener(shipment.id));
+        let newShipment = new AssignedShipment(shipment.id, shipment.client.name, shipment.status);
+        newShipment.displayDetails();
       });
     } else {
       shipmentData.forEach(function(shipment){
         if (shipment["shipment_details"][0]["driver_id"] == driver || shipment["shipment_details"][1]["driver_id"] == driver){
-          let newRow = `<tr id="ASId-${shipment.id}"><td>${shipment.id}</td><td>${shipment.client.name}</td><td>${shipment.status}</td></tr>`
-          $("#assigned-shipment-list").append(newRow);
-          $("#ASId-" + shipment.id).on('click', () => assignedShipmentListener(shipment.id));
+          let newShipment = new AssignedShipment(shipment.id, shipment.client.name, shipment.status);
+          newShipment.displayDetails();
         }
       });
     }
