@@ -59,6 +59,8 @@ function populateUnassignedDetails(id){
           el.value = driver["name"]
           select.appendChild(el);
         });
+        let s = 0;
+        $("#pu-driver").val(s);
         $("#unassigned-shipment-pickup-driver").append('<button id="assign-pu-driver">Assign</button>')
       });
     }
@@ -84,9 +86,9 @@ function populateUnassignedDetails(id){
           select.appendChild(el);
         });
         $("#unassigned-shipment-delivery-driver").append('<button id="assign-del-driver">Assign</button>')
-        let d = $("#assign-del-driver");
-        console.log(d.options)
-        $("#assign-del-driver").on('click', () => assignDriver(31,"delivery",1));
+        let s = 0;
+        $("#del-driver").val(s);
+        $("#assign-del-driver").on('click', () => assignDelDriver());
       });
     }
   });
