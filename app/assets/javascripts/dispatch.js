@@ -25,7 +25,13 @@ function highlightUnassignedShipments(id){
   $("#USId-" + id).toggleClass('selected-shipment');
 }
 
-function assignDriver(shipmentId, driverType, driverId){
+function assignPuDriver(){
+  let driverId = $("#pu-driver").val();
+  alert(driverId);
+}
+
+function assignDelDriver(){
+  let driverId = $("#del-driver").val();
   alert(driverId);
 }
 
@@ -56,12 +62,13 @@ function populateUnassignedDetails(id){
         driverData.forEach(function(driver){
           var el = document.createElement("option");
           el.textContent = driver["name"];
-          el.value = driver["name"]
+          el.value = driver["id"]
           select.appendChild(el);
         });
         let s = 0;
         $("#pu-driver").val(s);
         $("#unassigned-shipment-pickup-driver").append('<button id="assign-pu-driver">Assign</button>')
+        $("#assign-pu-driver").on('click', () => assignPuDriver());
       });
     }
     if (consigneeId){
