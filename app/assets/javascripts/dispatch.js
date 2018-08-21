@@ -289,7 +289,6 @@ function shipmentSubmit(){
       $("#USId-" + shipment.id).on('click', () => unassignedShipmentListener(shipment.id));
     });
   });
-  $("#new_shipment input:last").blur();
 }
 
 function addListeners(){
