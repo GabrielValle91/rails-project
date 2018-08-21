@@ -27,7 +27,7 @@ function highlightUnassignedShipments(id){
 
 function assignPuDriver(){
   let driverId = $("#pu-driver").val();
-  let driverName = $("#pu-driver").text;
+  let driverName = $("#pu-driver option:selected").text()
   let shipperId = $("#shipperIdField").val();
   let sId = parseInt($("#unassigned-shipment-list tr.selected-shipment td:first")[0].innerHTML);
   let shipmentData = {
@@ -40,21 +40,33 @@ function assignPuDriver(){
   }
   $.ajax({
     type: 'PATCH',
-    url: `/shipments/${sId}`,
+    url: `/shipments/${sId}.json`,
     data: shipmentData
   })
-  .done(function(){
-    alert('good');
-    $("#unassigned-shipment-pickup-driver").html("Pickup Driver: " + driverName);
-  })
-  .fail(function(response){
-    console.log(response);
-  })
+  $("#unassigned-shipment-pickup-driver").empty();
+  $("#unassigned-shipment-pickup-driver").html("Pickup Driver: " + driverName);
 }
 
 function assignDelDriver(){
   let driverId = $("#del-driver").val();
-  alert(driverId);
+  let driverName = $("#del-driver option:selected").text()
+  let consigId = $("#consigIdField").val();
+  let sId = parseInt($("#unassigned-shipment-list tr.selected-shipment td:first")[0].innerHTML);
+  let shipmentData = {
+    'shipment':{
+      'location_consignee': {
+        'id': consigId,
+        'driver_id': driverId
+      }
+    }
+  }
+  $.ajax({
+    type: 'PATCH',
+    url: `/shipments/${sId}.json`,
+    data: shipmentData
+  })
+  $("#unassigned-shipment-delivery-driver").empty();
+  $("#unassigned-shipment-delivery-driver").html("Delivery Driver: " + driverName);
 }
 
 function populateUnassignedDetails(id){
