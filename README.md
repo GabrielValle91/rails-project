@@ -1,6 +1,6 @@
-# rails-project
+# Speed TMS
 
-  This is a Rails web application that allows users to create a profile and keep track of clients, drivers, shipments, locations and client's items in a transportation company environment.
+  This is a Rails web application that allows users to create a profile and keep track of clients, drivers, shipments, locations and client's items in a transportation company environment. This application also utilizes AJAX for easy refreshing of elements.
   Users can keep track of multiple clients, each client can have numerous shipments and items.
   Users can keep track of multiple drivers and locations, assigning them to shipments.
   Users can see an overview of top clients and drivers based on unique shipment count.
