@@ -4,7 +4,6 @@ class ShipmentsController < ApplicationController
   before_action :correct_user, only: [:show, :edit, :update]
   before_action :redirect_if_not_nested_show, only: [:index]
   before_action :redirect_if_not_nested_new, only: [:new, :create]
-  before_action :redirect_if_not_nested_edit, only: [:edit, :update]
 
   def index
     @shipments = current_user.shipments
@@ -47,10 +46,16 @@ class ShipmentsController < ApplicationController
 
   def update
     if @shipment.update(shipment_params)
-      redirect_to user_shipment_path(current_user, @shipment)
+      respond_to do |format|
+        format.html {redirect_to user_shipment_path(current_user, @shipment)}
+        format.json {render json: @shipment}
+      end
     else
       flash[:notice] = @shipment.errors.full_messages
-      redirect_to edit_user_shipment_path(current_user, @shipment)
+      respond_to do |format|
+        format.html {redirect_to edit_user_shipment_path(current_user, @shipment)}
+        format.json {render json: @shipment}
+      end
     end
   end
 

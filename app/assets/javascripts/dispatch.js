@@ -27,7 +27,27 @@ function highlightUnassignedShipments(id){
 
 function assignPuDriver(){
   let driverId = $("#pu-driver").val();
-  alert(driverId);
+  let driverName = $("#pu-driver").text;
+  let sId = parseInt($("#unassigned-shipment-list tr.selected-shipment td:first")[0].innerHTML);
+  let shipmentData = {
+    'shipment':{
+      'location_shipper': {
+        'driver_id': driverId
+      }
+    }
+  }
+  $.ajax({
+    type: 'PATCH',
+    url: `/shipments/${sId}`,
+    data: shipmentData
+  })
+  .done(function(){
+    alert('good');
+    $("#unassigned-shipment-pickup-driver").html("Pickup Driver: " + driverName);
+  })
+  .fail(function(response){
+    alert(response);
+  })
 }
 
 function assignDelDriver(){
@@ -267,8 +287,9 @@ function shipmentSubmit(){
       let newRow = `<tr id="USId-${shipment.id}"><td>${shipment.id}</td><td>${shipment.client.name}</td><td>${getFormattedDate(shipment.pickup_date)}</td><td>${getFormattedDate(shipment.delivery_date)}</td></tr>`
       $("#unassigned-shipment-list").append(newRow);
       $("#USId-" + shipment.id).on('click', () => unassignedShipmentListener(shipment.id));
-    })
-  })
+    });
+  });
+  $("#new_shipment input:last").blur();
 }
 
 function addListeners(){
