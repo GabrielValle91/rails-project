@@ -25,6 +25,10 @@ function highlightUnassignedShipments(id){
   $("#USId-" + id).toggleClass('selected-shipment');
 }
 
+function assignDriver(shipmentId, driverType, driverId){
+  alert(driverId);
+}
+
 function populateUnassignedDetails(id){
   $("#unassigned-shipment-details p").empty();
   $.get("/shipments/" + id + ".json", function (shipmentData){
@@ -45,6 +49,18 @@ function populateUnassignedDetails(id){
       $.get("/drivers/" + pickupDriverId + ".json", function(driverData){
         $("#unassigned-shipment-pickup-driver").html("Pickup Driver: " + driverData["name"]);
       });
+    } else {
+      $.get("/drivers.json", function(driverData){
+        $("#unassigned-shipment-pickup-driver").html('Pickup Driver: <select id="pu-driver"></select>');
+        var select = document.getElementById("pu-driver")
+        driverData.forEach(function(driver){
+          var el = document.createElement("option");
+          el.textContent = driver["name"];
+          el.value = driver["name"]
+          select.appendChild(el);
+        });
+        $("#unassigned-shipment-pickup-driver").append('<button id="assign-pu-driver">Assign</button>')
+      });
     }
     if (consigneeId){
       $.get("/locations/" + consigneeId + ".json", function(locationData){
@@ -56,6 +72,21 @@ function populateUnassignedDetails(id){
     if (deliveryDriverId){
       $.get("/drivers/" + deliveryDriverId + ".json", function(driverData){
         $("#unassigned-shipment-delivery-driver").html("Delivery Driver: " + driverData["name"]);
+      });
+    } else {
+      $.get("/drivers.json", function(driverData){
+        $("#unassigned-shipment-delivery-driver").html('Delivery Driver: <select id="del-driver"></select>');
+        var select = document.getElementById("del-driver")
+        driverData.forEach(function(driver){
+          var el = document.createElement("option");
+          el.textContent = driver["name"];
+          el.value = driver["id"]
+          select.appendChild(el);
+        });
+        $("#unassigned-shipment-delivery-driver").append('<button id="assign-del-driver">Assign</button>')
+        let d = $("#assign-del-driver");
+        console.log(d.options)
+        $("#assign-del-driver").on('click', () => assignDriver(31,"delivery",1));
       });
     }
   });
