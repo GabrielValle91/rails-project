@@ -28,10 +28,12 @@ function highlightUnassignedShipments(id){
 function assignPuDriver(){
   let driverId = $("#pu-driver").val();
   let driverName = $("#pu-driver").text;
+  let shipperId = $("#shipperIdField").val();
   let sId = parseInt($("#unassigned-shipment-list tr.selected-shipment td:first")[0].innerHTML);
   let shipmentData = {
     'shipment':{
       'location_shipper': {
+        'id': shipperId,
         'driver_id': driverId
       }
     }
@@ -46,7 +48,7 @@ function assignPuDriver(){
     $("#unassigned-shipment-pickup-driver").html("Pickup Driver: " + driverName);
   })
   .fail(function(response){
-    alert(response);
+    console.log(response);
   })
 }
 
@@ -67,6 +69,11 @@ function populateUnassignedDetails(id){
     if (shipperId){
       $.get("/locations/" + shipperId + ".json", function(locationData) {
         $("#unassigned-shipment-pickup-company").html("Shipper: " + locationData["company_name"]);
+        let idField = document.createElement("input");
+        idField.setAttribute("type","hidden");
+        idField.setAttribute("value", shipperId);
+        idField.setAttribute("id", "shipperIdField");
+        $("#unassigned-shipment-pickup-company").append(idField);
         $("#unassigned-shipment-pickup-address").html("Address: " + locationData["address1"] + " " + locationData["address2"]);
         $("#unassigned-shipment-pickup-city").html("City: " + locationData["city"] + ", " + locationData["state"] + " " + locationData["zip_code"]);
       });
@@ -94,6 +101,11 @@ function populateUnassignedDetails(id){
     if (consigneeId){
       $.get("/locations/" + consigneeId + ".json", function(locationData){
         $("#unassigned-shipment-delivery-company").html("Consignee: " + locationData["company_name"]);
+        let conIdField = document.createElement("input");
+        conIdField.setAttribute("type","hidden");
+        conIdField.setAttribute("value", consigneeId);
+        conIdField.setAttribute("id", "consigIdField");
+        $("#unassigned-shipment-delivery-company").append(conIdField);
         $("#unassigned-shipment-delivery-address").html("Address: " + locationData["address1"] + " " + locationData["address2"]);
         $("#unassigned-shipment-delivery-city").html("City: " + locationData["city"] + ", " + locationData["state"] + " " + locationData["zip_code"]);
       });
