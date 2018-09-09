@@ -1,4 +1,4 @@
 class ShipmentItem < ApplicationRecord
-  belongs_to: item
-  belongs_to: shipment
+  belongs_to :item
+  belongs_to :shipment
 end
