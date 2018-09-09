@@ -17,6 +17,28 @@ $(function() {
     let max = $(this).data("max");
     locationShow(id, max);
   });
+
+  $("#alphabetize").on('click', function(){
+    $.get("/locations.json", function(locations){
+      console.log(locations);
+      locations.sort(function(localA, localB){
+        let nameA = localA.company_name.toUpperCase();
+        let nameB = localB.company_name.toUpperCase();
+        if (nameA < nameB){
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      })
+      $("ol").empty();
+      locations.forEach((location) => {
+        let listItem = "<li>" + location.company_name + "</li>"
+        $("ol").append(listItem)
+      })
+    })
+  })
 });
 
 function locationShow (id, max){

@@ -4,15 +4,19 @@ class LocationsController < ApplicationController
   before_action :correct_user, only: [:edit, :update, :show]
   before_action :redirect_if_not_nested_new, only: [:new, :create]
   before_action :redirect_if_not_nested_edit, only: [:edit, :update]
-  before_action :redirect_if_not_nested_show, only: [:index]
+  #before_action :redirect_if_not_nested_show, only: [:index]
 
   def index
     @locations = current_user.locations
+    respond_to do |format|
+      format.html
+      format.json {render json: @locations}
+    end
   end
 
   def show
     respond_to do |format|
-      format.html {render :show}
+      format.html
       format.json {render json: @location}
     end
   end

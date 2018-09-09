@@ -223,17 +223,45 @@ function populateUnassignedList(){
   });
 }
 
-function AssignedShipment(id, client_name, status){
-  this.id = id;
-  this.clientName = client_name;
-  this.status = status;
+// function AssignedShipment(id, client_name, status){
+//   this.id = id;
+//   this.clientName = client_name;
+//   this.status = status;
+// }
+//
+// AssignedShipment.prototype.displayDetails = function(){
+//   let newRow = `<tr id="ASId-${this.id}"><td>${this.id}</td><td>${this.clientName}</td><td>${this.status}</td></tr>`
+//   $("#assigned-shipment-list").append(newRow);
+//   $("#ASId-" + this.id).on('click', () => assignedShipmentListener(this.id));
+// }
+
+class AssignedShipment{
+  constructor(id, client_name, status){
+    this.id = id;
+    this.clientName = client_name;
+    this.status = status;
+  }
+
+   displayDetails() {
+    console.log("hello")
+    let newRow = `<tr id="ASId-${this.id}"><td>${this.id}</td><td>${this.clientName}</td><td>${this.status}</td></tr>`
+    $("#assigned-shipment-list").append(newRow);
+    $("#ASId-" + this.id).on('click', () => assignedShipmentListener(this.id));
+  }
+
 }
 
-AssignedShipment.prototype.displayDetails = function(){
-  let newRow = `<tr id="ASId-${this.id}"><td>${this.id}</td><td>${this.clientName}</td><td>${this.status}</td></tr>`
-  $("#assigned-shipment-list").append(newRow);
-  $("#ASId-" + this.id).on('click', () => assignedShipmentListener(this.id));
-}
+// function AssignedShipment(id, client_name, status){
+//   this.id = id;
+//   this.clientName = client_name;
+//   this.status = status;
+// }
+//
+// AssignedShipment.prototype.displayDetails = function(){
+//   let newRow = `<tr id="ASId-${this.id}"><td>${this.id}</td><td>${this.clientName}</td><td>${this.status}</td></tr>`
+//   $("#assigned-shipment-list").append(newRow);
+//   $("#ASId-" + this.id).on('click', () => assignedShipmentListener(this.id));
+// }
 
 function populateAssignedList(driver){
   $("#assigned-shipment-list").empty();
